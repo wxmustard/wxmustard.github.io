@@ -12,18 +12,18 @@ author:
   head: https://git.shuosc.cn/uploads/-/system/user/avatar/21/avatar.png
   signature: Only when you plant the flowers can you really smell their fragrance.
 navication:
-#  - name: Github
-#    link: https://github.com
-#  - name: V2EX
-#    link: https://www.v2ex.com/
+  - name: Github
+    link: https://github.com
+  - name: V2EX
+    link: https://www.v2ex.com/
 # content
 content_width: 800
 # Footer
 ## Social icon list: [facebook, twitter, weibo, wechat, github, stackoverflow, linkin, email, segmentfault, flickr, zhihu, disqus, douban, bilibili]
 social:
-#  - name: Github
-#    icon: github
-#    link: https://github.com/BoizZ
+  - name: Github
+    icon: github
+    link: https://github.com/
 #  - name: Weibo
 #    icon: weibo
 #    link: https://weibo.com/heqibang
