@@ -1,0 +1,16 @@
+image: node:latest
+
+pages:
+  cache:
+    paths:
+    - node_modules/
+
+  script:
+  - npm install hexo-cli -g
+  - npm install
+  - hexo g
+  artifacts:
+    paths:
+    - public
+  only:
+  - master
