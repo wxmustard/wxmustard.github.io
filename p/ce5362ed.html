@@ -1,0 +1,37 @@
+<!DOCTYPE html><html lang="zh-cn"><head><meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=Edge"><meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no"><meta name="format-detection" content="telephone=no"><meta name="format-detection" content="email=no"><meta name="description" content="Mr Wang's blog"><meta name="keywords" content="Hexo, Gruntjs, Nodejs, Reactjs, Vuejs"><title>SpringBoot——第一个SpringBoot应用 - Mr Wang's blog</title><link rel="stylesheet" href="/css/main_style.min.css"><link rel="icon" href="/favicon.ico"></head><body><input id="navi" type="checkbox"><ul class="main-navication"><li><a href="/"><span>Home</span></a></li><li><a href="https://github.com"><span>Github</span></a></li><li><a href="https://www.v2ex.com/"><span>V2EX</span></a></li></ul><div class="wrapper" id="wrap"><div class="post-header"><label class="navi-button light" for="navi">MENU</label><img class="background" src="//s3.shu.aixinwu.org/wx_post_bg.jpg"><div class="post-title"><h1 class="title">SpringBoot——第一个SpringBoot应用</h1><ul class="meta"><li><i class="icon icon-author"></i>Mustard Wang</li><li><i class="icon icon-clock"></i>4 Minutes</li><li><i class="icon icon-calendar"></i>2017年10月29日</li></ul></div></div><div class="article-content" style="max-width:800px"><h2 id="第一个SpringBoot应用"><a href="#第一个SpringBoot应用" class="headerlink" title="第一个SpringBoot应用"></a>第一个SpringBoot应用</h2><ul>
+<li><p>使用软件： IDEA </p>
+</li>
+<li><p>检查<code>JAVA</code>和<code>Maven</code>版本</p>
+</li>
+<li><p>打开IDEA：new project –&gt;  Spring Initializr –&gt;  SprintBoot version 1.4.7 –&gt;  web –&gt; web –&gt; finish</p>
+</li>
+<li><p>第一次使用<code>springboot</code>会加载很多<code>jar</code>包，为了加快速度，可以使用阿里云的镜像源</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">cd</span> /usr/<span class="built_in">local</span>/maven/conf</div><div class="line">vim setting.xml</div><div class="line"><span class="comment"># 加入以下语句</span></div><div class="line">&lt;mirror&gt;</div><div class="line">  &lt;id&gt;nexus-aliyun&lt;/id&gt;</div><div class="line">  &lt;mirrorOf&gt;*&lt;/mirrorOf&gt;</div><div class="line">  &lt;name&gt;Nexus aliyun&lt;/name&gt;</div><div class="line">  &lt;url&gt;http://maven.aliyun.com/nexus/content/groups/public&lt;/url&gt;</div><div class="line">&lt;/mirror&gt;</div></pre></td></tr></table></figure>
+</li>
+<li><p>删除不相关的文件</p>
+<p><img src="https://vgy.me/G6SnUy.png" alt=""></p>
+</li>
+<li><p>new java class</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">package</span> com.wx.girl;</div><div class="line"></div><div class="line"><span class="keyword">import</span> org.springframework.web.bind.annotation.RequestMapping;</div><div class="line"><span class="keyword">import</span> org.springframework.web.bind.annotation.RequestMethod;</div><div class="line"><span class="keyword">import</span> org.springframework.web.bind.annotation.RestController;</div><div class="line"></div><div class="line"><span class="comment">/**</span></div><div class="line"><span class="comment"> * Created by mustard</span></div><div class="line"><span class="comment"> * 17-10-29 下午7:28</span></div><div class="line"><span class="comment"> */</span></div><div class="line"><span class="meta">@RestController</span></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">HelloController</span> </span>&#123;</div><div class="line">    <span class="meta">@RequestMapping</span>(value = <span class="string">"/hello"</span>, method = RequestMethod.GET)</div><div class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">say</span><span class="params">()</span></span>&#123;</div><div class="line">        <span class="keyword">return</span> <span class="string">"Hello Spring Boot!"</span>;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+<li><p>启动HelloController，有三种方法</p>
+<ul>
+<li><p>在<code>IDEA</code>界面上方点击<code>run</code></p>
+</li>
+<li><p>在终端中进入项目目录，使用下面的命令启动项目</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">mvn spring-boot:run</div></pre></td></tr></table></figure>
+</li>
+<li><p>在终端里编译项目</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">mvn install</div><div class="line"><span class="built_in">cd</span> target</div><div class="line">java -jar ~.jar</div></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p>以上三种方式均可启动项目，在浏览器中输入<code>http://localhost:8080/hello</code>即可访问刚刚创建的项目</p>
+<p>​</p>
+<p>​</p>
+</li>
+</ul>
+</div><div class="article-meta" style="max-width:800px"><div class="tags"><i class="icon icon-tag"></i><ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/IDEA/">IDEA</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SpringBoot/">SpringBoot</a><span class="tag-list-count">5</span></li></ul></div><div class="categories"><i class="icon icon-category"></i><ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/技术/">技术</a><span class="category-list-count">24</span></li></ul></div></div><ul class="navication"><li class="home"><a href="/"><i class="icon icon-home"></i></a></li><li><a href="/p/278b56e5.html"><i class="icon icon-arror-left"></i></a></li><li><a href="/p/be02a930.html"><i class="icon icon-arror-right"></i></a></li></ul><div class="page-footer"><div class="top"><ul class="social"><li><a href="https://github.com/" title="Github" target="_blank"><i class="icon icon-github"></i></a></li></ul></div><div class="bottom"><p class="copyright">© 2017 Mr Wang's blog<br><small>POWER BY <a href="https://hexo.io" target="_blank">HEXO</a></small><small>, THEME BY <a href="https://github.com/BoizZ/hexo-theme-laughing" target="_blank">LAUGHING</a></small></p></div></div></div><script>var wrap = document.getElementById('wrap');
+window.onload = function () {
+  wrap.className += ' done';
+}</script></body></html>

@@ -1,0 +1,32 @@
+<!DOCTYPE html><html lang="zh-cn"><head><meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=Edge"><meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no"><meta name="format-detection" content="telephone=no"><meta name="format-detection" content="email=no"><meta name="description" content="Mr Wang's blog"><meta name="keywords" content="Hexo, Gruntjs, Nodejs, Reactjs, Vuejs"><title>远程连接MySQL数据库 - Mr Wang's blog</title><link rel="stylesheet" href="/css/main_style.min.css"><link rel="icon" href="/favicon.ico"></head><body><input id="navi" type="checkbox"><ul class="main-navication"><li><a href="/"><span>Home</span></a></li><li><a href="https://github.com"><span>Github</span></a></li><li><a href="https://www.v2ex.com/"><span>V2EX</span></a></li></ul><div class="wrapper" id="wrap"><div class="post-header"><label class="navi-button light" for="navi">MENU</label><img class="background" src="//s3.shu.aixinwu.org/wx_post_bg.jpg"><div class="post-title"><h1 class="title">远程连接MySQL数据库</h1><ul class="meta"><li><i class="icon icon-author"></i>Mustard Wang</li><li><i class="icon icon-clock"></i>4 Minutes</li><li><i class="icon icon-calendar"></i>2017年10月10日</li></ul></div></div><div class="article-content" style="max-width:800px"><p><strong>服务器端</strong></p>
+<ul>
+<li><p>安装<code>mysql-server</code></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo apt install mysql-server</div></pre></td></tr></table></figure>
+</li>
+<li><p>查看<code>mysql</code>的服务状态</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">service mysql status</div><div class="line">service mysql start</div></pre></td></tr></table></figure>
+</li>
+<li><p><strong>MySQL</strong>允许远程访问的设置</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">cd</span> /etc/mysql/mysql.conf.d/</div><div class="line">sudo vim mysqld.cnf</div><div class="line"><span class="comment"># 将mysqld.cnf中的一句话注释</span></div><div class="line"><span class="comment"># Instead of skip-networking the default is now to listen only on</span></div><div class="line"><span class="comment"># localhost which is more compatible and is not less secure.</span></div><div class="line"><span class="comment"># bind-address          = 127.0.0.1</span></div></pre></td></tr></table></figure>
+</li>
+<li><p>登录mysql</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"># 登录mysql</div><div class="line">mysql -u root -p</div><div class="line"># 创建远程登录用户并授权</div><div class="line">grant all PRIVILEGES on 数据库.* to 授权用户(如root等)@&apos;允许远程连接的IP地址&apos; identified by &apos;授权用户的密码&apos;;</div><div class="line">grant all privileges on wx.* to root@&apos;%&apos; identified by &apos;root&apos;</div><div class="line"># 使刚刚的语句生效</div><div class="line">flush privilege;</div></pre></td></tr></table></figure>
+<p>​</p>
+</li>
+<li><p><code>mysql</code>因为安全的因素，默认设置无法远程连接，只能本地连接，此时需要用户自己去修改其中配置</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"># mysql数据库中存放着各种配置信息</div><div class="line">use mysql;</div><div class="line"># 查看用户的权限情况</div><div class="line">select host,user from user;</div><div class="line"># (%表示是所有的外部机器，如果指定某一台机，就将%改为相应的机器名；‘root’则是指要使用的用户名，里面的password需要自己修改成root的密码)</div><div class="line">mysql&gt; Grant all privileges on *.* to &apos;root&apos;@&apos;%&apos; identified by &apos;password&apos; with grant option;</div><div class="line"># 使修改生效</div><div class="line">flush privileges;</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p><strong>客户端</strong></p>
+<ul>
+<li><p>安装<code>mysql-client</code></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo apt install mysql-client mycli</div></pre></td></tr></table></figure>
+</li>
+<li><p>连接远程数据库</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">mysql -h 111.186.110.177 -u root -p root</div><div class="line">show databases;</div></pre></td></tr></table></figure>
+</li>
+</ul>
+</div><div class="article-meta" style="max-width:800px"><div class="tags"><i class="icon icon-tag"></i><ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySQL/">MySQL</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ubuntu/">ubuntu</a><span class="tag-list-count">6</span></li></ul></div></div><ul class="navication"><li class="home"><a href="/"><i class="icon icon-home"></i></a></li><li><a href="/p/4b40aed8.html"><i class="icon icon-arror-left"></i></a></li><li><a href="/p/f2126ca.html"><i class="icon icon-arror-right"></i></a></li></ul><div class="page-footer"><div class="top"><ul class="social"><li><a href="https://github.com/" title="Github" target="_blank"><i class="icon icon-github"></i></a></li></ul></div><div class="bottom"><p class="copyright">© 2017 Mr Wang's blog<br><small>POWER BY <a href="https://hexo.io" target="_blank">HEXO</a></small><small>, THEME BY <a href="https://github.com/BoizZ/hexo-theme-laughing" target="_blank">LAUGHING</a></small></p></div></div></div><script>var wrap = document.getElementById('wrap');
+window.onload = function () {
+  wrap.className += ' done';
+}</script></body></html>

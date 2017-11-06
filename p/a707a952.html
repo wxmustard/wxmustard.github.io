@@ -1,0 +1,61 @@
+<!DOCTYPE html><html lang="zh-cn"><head><meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=Edge"><meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no"><meta name="format-detection" content="telephone=no"><meta name="format-detection" content="email=no"><meta name="description" content="Mr Wang's blog"><meta name="keywords" content="Hexo, Gruntjs, Nodejs, Reactjs, Vuejs"><title>SpringBoot——Controller - Mr Wang's blog</title><link rel="stylesheet" href="/css/main_style.min.css"><link rel="icon" href="/favicon.ico"></head><body><input id="navi" type="checkbox"><ul class="main-navication"><li><a href="/"><span>Home</span></a></li><li><a href="https://github.com"><span>Github</span></a></li><li><a href="https://www.v2ex.com/"><span>V2EX</span></a></li></ul><div class="wrapper" id="wrap"><div class="post-header"><label class="navi-button light" for="navi">MENU</label><img class="background" src="//s3.shu.aixinwu.org/wx_post_bg.jpg"><div class="post-title"><h1 class="title">SpringBoot——Controller</h1><ul class="meta"><li><i class="icon icon-author"></i>Mustard Wang</li><li><i class="icon icon-clock"></i>0 Minutes</li><li><i class="icon icon-calendar"></i>2017年10月31日</li></ul></div></div><div class="article-content" style="max-width:800px"><table>
+<thead>
+<tr>
+<th>注解</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>@Controller</td>
+<td>处理http请求</td>
+</tr>
+<tr>
+<td>@RestController</td>
+<td>Spring4新增注解，等同于@Controller + @ResponseBoby</td>
+</tr>
+<tr>
+<td>@RequestMapping</td>
+<td>配置url映射，希望用户通过某个url访问到我们写的方法</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><p><code>url</code>映射，访问<code>say</code>方法</p>
+<p><img src="https://vgy.me/mFHieZ.png" alt=""></p>
+<p>需要访问<code>http://localhost:8080/hello/hi</code>才能得到结果</p>
+</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>注解</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>@PathVariable</td>
+<td>获取url中的数据</td>
+</tr>
+<tr>
+<td>@RequestParam</td>
+<td>获取请求参数的值</td>
+</tr>
+<tr>
+<td>@GetMapping</td>
+<td>组合注解</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><p>@PathVariable(“id”) 获取url中的参数。</p>
+<p>如：localhost:8080/hello/say/100 </p>
+</li>
+<li><p>@RequestParam(“id”) 获取url?id=100</p>
+</li>
+</ul>
+</div><div class="article-meta" style="max-width:800px"><div class="tags"><i class="icon icon-tag"></i><ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/IDEA/">IDEA</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SpringBoot/">SpringBoot</a><span class="tag-list-count">5</span></li></ul></div><div class="categories"><i class="icon icon-category"></i><ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/技术/">技术</a><span class="category-list-count">24</span></li></ul></div></div><ul class="navication"><li class="home"><a href="/"><i class="icon icon-home"></i></a></li><li><a href="/p/6de21891.html"><i class="icon icon-arror-left"></i></a></li><li><a href="/p/278b56e5.html"><i class="icon icon-arror-right"></i></a></li></ul><div class="page-footer"><div class="top"><ul class="social"><li><a href="https://github.com/" title="Github" target="_blank"><i class="icon icon-github"></i></a></li></ul></div><div class="bottom"><p class="copyright">© 2017 Mr Wang's blog<br><small>POWER BY <a href="https://hexo.io" target="_blank">HEXO</a></small><small>, THEME BY <a href="https://github.com/BoizZ/hexo-theme-laughing" target="_blank">LAUGHING</a></small></p></div></div></div><script>var wrap = document.getElementById('wrap');
+window.onload = function () {
+  wrap.className += ' done';
+}</script></body></html>

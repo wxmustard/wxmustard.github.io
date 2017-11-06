@@ -1,0 +1,44 @@
+<!DOCTYPE html><html lang="zh-cn"><head><meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=Edge"><meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no"><meta name="format-detection" content="telephone=no"><meta name="format-detection" content="email=no"><meta name="description" content="Mr Wang's blog"><meta name="keywords" content="Hexo, Gruntjs, Nodejs, Reactjs, Vuejs"><title>Spark安装 - Mr Wang's blog</title><link rel="stylesheet" href="/css/main_style.min.css"><link rel="icon" href="/favicon.ico"></head><body><input id="navi" type="checkbox"><ul class="main-navication"><li><a href="/"><span>Home</span></a></li><li><a href="https://github.com"><span>Github</span></a></li><li><a href="https://www.v2ex.com/"><span>V2EX</span></a></li></ul><div class="wrapper" id="wrap"><div class="post-header"><label class="navi-button light" for="navi">MENU</label><img class="background" src="//s3.shu.aixinwu.org/wx_post_bg.jpg"><div class="post-title"><h1 class="title">Spark安装</h1><ul class="meta"><li><i class="icon icon-author"></i>Mustard Wang</li><li><i class="icon icon-clock"></i>6 Minutes</li><li><i class="icon icon-calendar"></i>2017年10月2日</li></ul></div></div><div class="article-content" style="max-width:800px"><h2 id="Spark"><a href="#Spark" class="headerlink" title="Spark"></a>Spark</h2><ul>
+<li><p><a href="http://mirrors.shuosc.org/apache/spark/spark-2.2.0/spark-2.2.0-bin-hadoop2.7.tgz" target="_blank" rel="external">Spark-2.2.0下载</a></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">wget http://mirrors.shuosc.org/apache/spark/spark-2.2.0/spark-2.2.0-bin-hadoop2.7.tgz</div></pre></td></tr></table></figure>
+</li>
+<li><p>解压</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">tar xzf spark-2.2.0-bin-hadoop2.7.tgz</div></pre></td></tr></table></figure>
+</li>
+<li><p>修改配置文件，目录为<code>/usr/local/spark/conf</code></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">cp slaves.template slaves</div><div class="line">cp spark-env.sh.template spark-env.sh</div></pre></td></tr></table></figure>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># slaves</span></div><div class="line">vm15</div><div class="line">vm16</div><div class="line"><span class="comment"># spark-env.sh</span></div><div class="line"><span class="built_in">export</span> SPARK_MASTER_HOST=vm14</div><div class="line"><span class="built_in">export</span> SPARK_WORKER_MEMORY=2g</div><div class="line"><span class="built_in">export</span> HADOOP_CONF_DIR=/usr/<span class="built_in">local</span>/hadoop/etc/hadoop</div></pre></td></tr></table></figure>
+</li>
+<li><p>启动<code>Spark</code>，目录为<code>/usr/local/spark/sbin</code></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ ./start-all.sh</div></pre></td></tr></table></figure>
+</li>
+<li><p>查看当前节点的任务</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># 在vm14下运行结果</span></div><div class="line">$ jps</div><div class="line">5362 NameNode</div><div class="line">5715 ResourceManager</div><div class="line">6004 Master</div><div class="line">7093 Jps</div><div class="line">5558 SecondaryNameNode</div><div class="line"><span class="comment">#进程号  名称</span></div><div class="line"><span class="comment"># 在vm15下运行结果</span></div><div class="line">$ jps</div><div class="line">3760 Jps</div><div class="line">3042 NodeManager</div><div class="line">2940 DataNode</div><div class="line">3660 Workerscala</div></pre></td></tr></table></figure>
+</li>
+<li><p>关闭<code>Spark</code>,目录为<code>/usr/local/spark/sbin</code></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ ./stop-all.sh</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="Scala"><a href="#Scala" class="headerlink" title="Scala"></a>Scala</h2><ul>
+<li><p><a href="https://downloads.lightbend.com/scala/2.12.3/scala-2.12.3.rpm" target="_blank" rel="external">scala-2.12.3下载</a></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">wget https://downloads.lightbend.com/scala/2.12.3/scala-2.12.3.rpm</div></pre></td></tr></table></figure>
+</li>
+<li><p>安装</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">rpm -ivh scala-2.12.3.rpm</div></pre></td></tr></table></figure>
+</li>
+<li><p>验证是否安装成功</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">scala -version</div></pre></td></tr></table></figure>
+<p>​</p>
+</li>
+</ul>
+<hr>
+<p>##端口转发</p>
+<ul>
+<li><p>安装端口映射工具(在lab1)</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">sudo apt install rinetd</div><div class="line"><span class="comment"># 修改配置文件 /etc/rinetd.conf</span></div><div class="line">cat /etc/rinetd.conf</div><div class="line"><span class="comment"># bindadress    bindport  connectaddress  connectport</span></div><div class="line">0.0.0.0  50070  192.168.110.114 50070</div><div class="line">0.0.0.0  8088   192.168.110.114 8088  </div><div class="line"><span class="comment"># 重启服务</span></div><div class="line">sudo service rinetd restart</div><div class="line"><span class="comment"># 查看状态</span></div><div class="line">sudo service rinetd status</div><div class="line"><span class="comment"># 显示网络连接、路由表和网络接口信息</span></div><div class="line">netstat -an</div><div class="line"><span class="comment"># 扫描端口</span></div><div class="line">nmap -v -A 192.168.110.114</div><div class="line"><span class="comment"># 关闭防火墙</span></div><div class="line">sudo systemctl stop firewalld.service</div><div class="line"><span class="comment"># 查看防火墙状态</span></div><div class="line">sudo systemctl status firewalld.service</div></pre></td></tr></table></figure>
+</li>
+</ul>
+</div><div class="article-meta" style="max-width:800px"><div class="tags"><i class="icon icon-tag"></i><ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/spark/">spark</a><span class="tag-list-count">2</span></li></ul></div><div class="categories"><i class="icon icon-category"></i><ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/技术/">技术</a><span class="category-list-count">24</span></li></ul></div></div><ul class="navication"><li class="home"><a href="/"><i class="icon icon-home"></i></a></li><li><a href="/p/9616d5bb.html"><i class="icon icon-arror-left"></i></a></li><li><a href="/p/7ea34fb9.html"><i class="icon icon-arror-right"></i></a></li></ul><div class="page-footer"><div class="top"><ul class="social"><li><a href="https://github.com/" title="Github" target="_blank"><i class="icon icon-github"></i></a></li></ul></div><div class="bottom"><p class="copyright">© 2017 Mr Wang's blog<br><small>POWER BY <a href="https://hexo.io" target="_blank">HEXO</a></small><small>, THEME BY <a href="https://github.com/BoizZ/hexo-theme-laughing" target="_blank">LAUGHING</a></small></p></div></div></div><script>var wrap = document.getElementById('wrap');
+window.onload = function () {
+  wrap.className += ' done';
+}</script></body></html>

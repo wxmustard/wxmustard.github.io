@@ -1,0 +1,44 @@
+<!DOCTYPE html><html lang="zh-cn"><head><meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=Edge"><meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no"><meta name="format-detection" content="telephone=no"><meta name="format-detection" content="email=no"><meta name="description" content="Mr Wang's blog"><meta name="keywords" content="Hexo, Gruntjs, Nodejs, Reactjs, Vuejs"><title>ssh 免密码登录&amp;&amp;java安装 - Mr Wang's blog</title><link rel="stylesheet" href="/css/main_style.min.css"><link rel="icon" href="/favicon.ico"></head><body><input id="navi" type="checkbox"><ul class="main-navication"><li><a href="/"><span>Home</span></a></li><li><a href="https://github.com"><span>Github</span></a></li><li><a href="https://www.v2ex.com/"><span>V2EX</span></a></li></ul><div class="wrapper" id="wrap"><div class="post-header"><label class="navi-button light" for="navi">MENU</label><img class="background" src="//s3.shu.aixinwu.org/wx_post_bg.jpg"><div class="post-title"><h1 class="title">ssh 免密码登录&amp;&amp;java安装</h1><ul class="meta"><li><i class="icon icon-author"></i>Mustard Wang</li><li><i class="icon icon-clock"></i>4 Minutes</li><li><i class="icon icon-calendar"></i>2017年10月2日</li></ul></div></div><div class="article-content" style="max-width:800px"><h2 id="ssh-免密码登录"><a href="#ssh-免密码登录" class="headerlink" title="ssh 免密码登录"></a>ssh 免密码登录</h2><ul>
+<li><p>生成<code>key</code></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ssh-keygen -t rsa</div></pre></td></tr></table></figure>
+<p>执行上条命令将会生成两个文件，<code>id_rsa</code>,<code>id_rsa.pub</code></p>
+</li>
+<li><p>将<code>id_rsa.pub</code>中的内容追加到<code>authorized_keys</code>中</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">cat .ssh/id_rsa.pub &gt;&gt; .ssh/authorized_keys</div></pre></td></tr></table></figure>
+</li>
+<li><p>使配置文件生效  <code>/etc/ssh/sshd_config</code>文件中的一行代码(<code>#authorized~~~~</code>)取消注释即可</p>
+</li>
+<li><p>修改权限</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">chmod 600 .ssh</div><div class="line">chmod 600 .ssh/authorized_keys</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="为虚拟机安装jdk"><a href="#为虚拟机安装jdk" class="headerlink" title="为虚拟机安装jdk"></a>为虚拟机安装jdk</h2><h3 id="安装Hadoop和spark的步骤与jdk类似"><a href="#安装Hadoop和spark的步骤与jdk类似" class="headerlink" title="安装Hadoop和spark的步骤与jdk类似"></a>安装<code>Hadoop</code>和<code>spark</code>的步骤与<code>jdk</code>类似</h3><ul>
+<li><p>下载<code>jdk</code></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">wget 链接地址</div></pre></td></tr></table></figure>
+</li>
+<li><p>解压<code>jdk</code>压缩包</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">tar xzf 压缩包名称</div></pre></td></tr></table></figure>
+</li>
+<li><p>创建安装目录</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo mkdir /usr/<span class="built_in">local</span>/jdk</div></pre></td></tr></table></figure>
+</li>
+<li><p>赋权命令</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo chown centos:centos .ssh</div></pre></td></tr></table></figure>
+</li>
+<li><p>将<code>jdk</code>文件移动至<code>/usr/local/jdk</code>路径下</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">mv jdk/* /usr/<span class="built_in">local</span>/jdk</div></pre></td></tr></table></figure>
+</li>
+<li><p>配置<code>java</code>环境变量</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">vim .bashrc</div><div class="line"><span class="built_in">export</span> JAVA_HOME=/usr/<span class="built_in">local</span>/jdk</div><div class="line"><span class="built_in">export</span> PATH=<span class="variable">$JAVA_HOME</span>/bin:<span class="variable">$PATH</span></div><div class="line"><span class="built_in">export</span> CLASSPATH=,:<span class="variable">$JAVA_HOME</span>/lib/dj.jar:<span class="variable">$JAVA_HOME</span>/lib/tools.jar</div></pre></td></tr></table></figure>
+</li>
+<li><p>使<code>.bashrc</code>生效</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">source</span> .bashrc</div></pre></td></tr></table></figure>
+</li>
+<li><p>检测安装结果</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">javac</div><div class="line">java -version</div></pre></td></tr></table></figure>
+</li>
+</ul>
+</div><div class="article-meta" style="max-width:800px"><div class="tags"><i class="icon icon-tag"></i><ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/java/">java</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ssh/">ssh</a><span class="tag-list-count">1</span></li></ul></div><div class="categories"><i class="icon icon-category"></i><ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/技术/">技术</a><span class="category-list-count">24</span></li></ul></div></div><ul class="navication"><li class="home"><a href="/"><i class="icon icon-home"></i></a></li><li><a href="/p/de286b5f.html"><i class="icon icon-arror-left"></i></a></li></ul><div class="page-footer"><div class="top"><ul class="social"><li><a href="https://github.com/" title="Github" target="_blank"><i class="icon icon-github"></i></a></li></ul></div><div class="bottom"><p class="copyright">© 2017 Mr Wang's blog<br><small>POWER BY <a href="https://hexo.io" target="_blank">HEXO</a></small><small>, THEME BY <a href="https://github.com/BoizZ/hexo-theme-laughing" target="_blank">LAUGHING</a></small></p></div></div></div><script>var wrap = document.getElementById('wrap');
+window.onload = function () {
+  wrap.className += ' done';
+}</script></body></html>

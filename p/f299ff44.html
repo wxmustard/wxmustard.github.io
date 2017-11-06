@@ -1,0 +1,54 @@
+<!DOCTYPE html><html lang="zh-cn"><head><meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=Edge"><meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no"><meta name="format-detection" content="telephone=no"><meta name="format-detection" content="email=no"><meta name="description" content="Mr Wang's blog"><meta name="keywords" content="Hexo, Gruntjs, Nodejs, Reactjs, Vuejs"><title>2017/9/14 学习笔记 - Mr Wang's blog</title><link rel="stylesheet" href="/css/main_style.min.css"><link rel="icon" href="/favicon.ico"></head><body><input id="navi" type="checkbox"><ul class="main-navication"><li><a href="/"><span>Home</span></a></li><li><a href="https://github.com"><span>Github</span></a></li><li><a href="https://www.v2ex.com/"><span>V2EX</span></a></li></ul><div class="wrapper" id="wrap"><div class="post-header"><label class="navi-button light" for="navi">MENU</label><img class="background" src="//s3.shu.aixinwu.org/wx_post_bg.jpg"><div class="post-title"><h1 class="title">2017/9/14 学习笔记</h1><ul class="meta"><li><i class="icon icon-author"></i>Mustard Wang</li><li><i class="icon icon-clock"></i>3 Minutes</li><li><i class="icon icon-calendar"></i>2017年10月2日</li></ul></div></div><div class="article-content" style="max-width:800px"><h3 id="虚拟机需要的条件：-CPU，内存，磁盘（文件）"><a href="#虚拟机需要的条件：-CPU，内存，磁盘（文件）" class="headerlink" title="虚拟机需要的条件： CPU，内存，磁盘（文件）"></a>虚拟机需要的条件： CPU，内存，磁盘（文件）</h3><table>
+<thead>
+<tr>
+<th style="text-align:center">硬盘文件格式</th>
+<th style="text-align:left">特点</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">disk.img</td>
+<td style="text-align:left">img硬盘格式，I/O无差，但是占的磁盘空间太大</td>
+</tr>
+<tr>
+<td style="text-align:center">qcow</td>
+<td style="text-align:left">I/O慢一些，磁盘空间最大占20G，但是要看具体的情况来决定占多少磁盘空间</td>
+</tr>
+<tr>
+<td style="text-align:center">qcow2</td>
+<td style="text-align:left">I/O的速度比qcow的速度快但是小于img格式，故使用qcow2作为虚拟机格式</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h3 id="Linux命令"><a href="#Linux命令" class="headerlink" title="Linux命令"></a>Linux命令</h3><ul>
+<li><p><code>uname -ar</code> 查看内核</p>
+</li>
+<li><p><code>lsmod</code> 显示已经加载到内核中的模块的状态信息</p>
+<p><code>lsmod | grep kvm</code> 类似于模糊搜索，将<code>kvm</code>的文件显示出来，其他的不显示</p>
+</li>
+<li><p>快捷键:  <code>i</code> 进入编辑模式(<em>insert</em>)，   <em>esc</em>退出编辑模式，  <em>shift +:  wq</em> 保存并退出</p>
+</li>
+<li><p><code>wget  url</code>（下载链接） -c 下载中断可恢复</p>
+</li>
+<li><p><code>cat</code> 一次显示整个文件 <code>more</code> 一页一页的显示文件，<em>space</em>下一页，<em>b</em>上一页 <code>less</code> 可以随意浏览文件</p>
+</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">sudo apt install vim  <span class="comment"># ubuntu</span></div><div class="line"><span class="comment"># ubuntu安装软件</span></div><div class="line">sudo apt update</div><div class="line">sudo apt upgrade</div><div class="line"><span class="comment"># 修复依赖</span></div><div class="line">sudo apt -f install </div><div class="line"><span class="comment"># deb格式软件</span></div><div class="line">sudo dpkg -i 软件名.deb</div><div class="line">sudo yun install vim  <span class="comment"># centos</span></div></pre></td></tr></table></figure>
+<hr>
+<h3 id="KVM"><a href="#KVM" class="headerlink" title="KVM"></a>KVM</h3><ul>
+<li><p><strong>ubuntu</strong>下安装<code>KVM</code></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">sudo apt-get install qemu-kvm libvirt-bin virt-manager bridge-utils</div><div class="line">sudo apt install lxqt-openssh-askpass</div></pre></td></tr></table></figure>
+</li>
+<li><p>修改<code>KVM</code>配置文件</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo virsh net-edit default</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<ul>
+<li>启动虚拟机</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">sudo virsh define centos </div><div class="line"><span class="comment"># 列出当前所有的虚拟机</span></div><div class="line">sudo virsh list --all </div><div class="line"><span class="comment"># 取消定义</span></div><div class="line">sudo virsh undefine vm10 </div><div class="line"><span class="comment"># 关闭虚拟机</span></div><div class="line">sudo virsh shutdown vm10</div></pre></td></tr></table></figure>
+</div><div class="article-meta" style="max-width:800px"><div class="tags"><i class="icon icon-tag"></i><ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/linux/">linux</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/虚拟机/">虚拟机</a><span class="tag-list-count">2</span></li></ul></div><div class="categories"><i class="icon icon-category"></i><ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/技术/">技术</a><span class="category-list-count">24</span></li></ul></div></div><ul class="navication"><li class="home"><a href="/"><i class="icon icon-home"></i></a></li><li><a href="/p/6f961e32.html"><i class="icon icon-arror-left"></i></a></li><li><a href="/p/36d36890.html"><i class="icon icon-arror-right"></i></a></li></ul><div class="page-footer"><div class="top"><ul class="social"><li><a href="https://github.com/" title="Github" target="_blank"><i class="icon icon-github"></i></a></li></ul></div><div class="bottom"><p class="copyright">© 2017 Mr Wang's blog<br><small>POWER BY <a href="https://hexo.io" target="_blank">HEXO</a></small><small>, THEME BY <a href="https://github.com/BoizZ/hexo-theme-laughing" target="_blank">LAUGHING</a></small></p></div></div></div><script>var wrap = document.getElementById('wrap');
+window.onload = function () {
+  wrap.className += ' done';
+}</script></body></html>

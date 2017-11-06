@@ -1,0 +1,127 @@
+<!DOCTYPE html><html lang="zh-cn"><head><meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=Edge"><meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no"><meta name="format-detection" content="telephone=no"><meta name="format-detection" content="email=no"><meta name="description" content="Mr Wang's blog"><meta name="keywords" content="Hexo, Gruntjs, Nodejs, Reactjs, Vuejs"><title>NFS+minio挂载+WebDav - Mr Wang's blog</title><link rel="stylesheet" href="/css/main_style.min.css"><link rel="icon" href="/favicon.ico"></head><body><input id="navi" type="checkbox"><ul class="main-navication"><li><a href="/"><span>Home</span></a></li><li><a href="https://github.com"><span>Github</span></a></li><li><a href="https://www.v2ex.com/"><span>V2EX</span></a></li></ul><div class="wrapper" id="wrap"><div class="post-header"><label class="navi-button light" for="navi">MENU</label><img class="background" src="//s3.shu.aixinwu.org/wx_post_bg.jpg"><div class="post-title"><h1 class="title">NFS+minio挂载+WebDav</h1><ul class="meta"><li><i class="icon icon-author"></i>Mustard Wang</li><li><i class="icon icon-clock"></i>17 Minutes</li><li><i class="icon icon-calendar"></i>2017年10月2日</li></ul></div></div><div class="article-content" style="max-width:800px"><h2 id="nfs（ubuntu）"><a href="#nfs（ubuntu）" class="headerlink" title="nfs（ubuntu）"></a>nfs（ubuntu）</h2><ul>
+<li><p><code>nfs(Network File System)</code>网络文件系统，<code>RPC (Remote Procedure Call)</code>远端程序呼叫，<code>RPC</code>最主要的功能是在指定每个<code>NFS</code>功能所对应的端口号，并且汇报给用户端，让用户端可以连接到正确的端口上。(为什么<code>RPC</code>会知道每个<code>NFS</code>功能所对应的端口号呢，这是因为当服务器在开启<code>NFS</code>会随机的取用数个端口，并且会主动的向<code>RPC</code>注册，这样<code>RPC</code>就 可以知道每个端口对应的服务，然后 <code>RPC</code> 固定使用 <code>port 111</code> 來监听用户端的需求并告诉用户端正确的端口号）</p>
+</li>
+<li><p>关闭防火墙</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">sudo service ufw status</div><div class="line">sudo service ufw stop</div></pre></td></tr></table></figure>
+</li>
+<li><p>下载相应的软件包</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">sudo apt-get install rpcbind</div><div class="line">sudo apt-get install nfs-kernel-server  <span class="comment"># 仅在服务器端安装</span></div><div class="line">sudo apt-get install nfs-common</div></pre></td></tr></table></figure>
+</li>
+<li><p>创建一个共享文件的目录（仅<em>服务器端</em>操作）</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo mkdir /home/nfsdir</div></pre></td></tr></table></figure>
+</li>
+<li><p>修改配置文件<code>/etc/exports</code>,在文章末尾加上如下语句 （仅<em>服务器端</em>操作）</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">/home/nfsdir 192.168.110.0/24(rw,sync,no_root_squash,no_subtree_check)</div></pre></td></tr></table></figure>
+</li>
+<li><p>重新启动服务</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">sudo service rpcbind restart</div><div class="line">sudo service nfs-kernel-server restart</div><div class="line">sudo service nfs-kernel-server status</div></pre></td></tr></table></figure>
+</li>
+<li><p>创建挂载点 （仅<em>用户端</em>操作）</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># 创建挂载点</span></div><div class="line">mkdir wangxin </div><div class="line"><span class="comment"># 实现挂载</span></div><div class="line">sudo mount -t nfs 192.168.110.114:/home/nfsdir /home/ubuntu/wangxin </div><div class="line"><span class="comment"># 为目录修改权限</span></div><div class="line">sudo chown ubuntu:ubuntu wangxin</div></pre></td></tr></table></figure>
+<p>经过以上操作即可在<code>vm15，vm16</code>中查看并修改<code>vm4</code>共享的文件</p>
+<p><img src="https://vgy.me/CyVD2I.png" alt=""></p>
+<p><img src="https://vgy.me/AUurtA.png" alt=""></p>
+</li>
+<li><p>使用<code>chown</code>修改权限实际上是修改<code>UID</code>和<code>GID</code>，修改为同一用户可以在多机之间同时无障碍使用<code>nfs</code>共享文件夹。例如在<code>vm15</code>中修改了挂载点的权限后，<code>vm16</code>的权限也随之改变了，无需再次修改权限。</p>
+</li>
+</ul>
+<h2 id="minio"><a href="#minio" class="headerlink" title="minio"></a>minio</h2><h3 id="服务器端"><a href="#服务器端" class="headerlink" title="服务器端"></a>服务器端</h3><ul>
+<li><p><a href="https://dl.minio.io/server/minio/release/linux-amd64/minio" target="_blank" rel="external">minio下载</a></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">wget https://dl.minio.io/server/minio/release/linux-amd64/minio</div></pre></td></tr></table></figure>
+</li>
+<li><p>赋予可执行权限</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">chmod +x minio</div></pre></td></tr></table></figure>
+</li>
+<li><p>创建数据目录</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">mkdir minio1</div></pre></td></tr></table></figure>
+</li>
+<li><p>启动服务，这条命令会登录页面所需要的具体信息，然后在网页端登录</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># 新建一个session，将minio放入其中执行</span></div><div class="line">tmux new -s minio</div><div class="line"><span class="comment"># 列出当前的session</span></div><div class="line">tmux ls</div><div class="line"><span class="comment"># 进入其中一个session</span></div><div class="line">tmux attach -t minio</div><div class="line"><span class="comment"># 在minio中执行启动服务操作</span></div><div class="line">./minio server minio1</div><div class="line"><span class="comment"># 退出session</span></div><div class="line">ctrl + B 再按 D</div></pre></td></tr></table></figure>
+<p><img src="https://vgy.me/YLLcGg.png" alt=""></p>
+</li>
+<li><p>| AccessKey     | K5YEC0KYPFBAAPJCOVY3                     |<br>| ————- | —————————————- |<br>| <strong>SecretKey</strong> | qM98Y4uT/kXEACaRKU+8rJvgY9F6/Vy6pxt7wB/W |</p>
+</li>
+<li><p>遇到的问题及解决方案</p>
+<ul>
+<li><p>在网页上无法打开<a href="http://192.168.110.114:9000" target="_blank" rel="external">http://192.168.110.114:9000</a></p>
+<p>解决方法：退出虚拟机，回到实体机上，查看端口转发的配置文件，将9000端口添加到转发端口中，重启服务</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">cat /etc/rinetd.conf </div><div class="line">vim /etc/rinetd.conf</div><div class="line"><span class="comment"># 将端口加入到配置文件中</span></div><div class="line">0.0.0.0  9000   192.168.110.114 9000</div><div class="line">sudo service rinetd restart</div></pre></td></tr></table></figure>
+<p>打开网页端输入<code>key</code>，得到下图</p>
+<p><img src="https://vgy.me/i7VENX.png" alt=""></p>
+<p>​            </p>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="客户端"><a href="#客户端" class="headerlink" title="客户端"></a>客户端</h3><ul>
+<li><p><a href="https://dl.minio.io/client/mc/release/linux-amd64/mc" target="_blank" rel="external">minio客户端下载</a></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">wget https://dl.minio.io/client/mc/release/linux-amd64/mc</div></pre></td></tr></table></figure>
+</li>
+<li><p>赋予执行权限</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">chmod +x mc</div></pre></td></tr></table></figure>
+</li>
+<li><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ mc config host add myminio http://192.168.110.114:9000 K5YEC0KYPFBAAPJCOVY3 qM98Y4uT/kXEACaRKU+8rJvgY9F6/Vy6pxt7wB/W</div></pre></td></tr></table></figure>
+</li>
+<li><p>安装必要的环境</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo apt-get install automake autotools-dev fuse g++ git libcurl4-gnutls-dev libfuse-dev libssl-dev libxml2-dev make pkg-config</div></pre></td></tr></table></figure>
+</li>
+<li><p>下载编译安装<code>s3fs</code></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">git <span class="built_in">clone</span> https://github.com/s3fs-fuse/s3fs-fuse.git</div><div class="line"><span class="built_in">cd</span> s3fs-fuse</div><div class="line">./autogen.sh</div><div class="line">./configure</div><div class="line">htop <span class="comment"># 监控虚拟机，可以查看到虚拟机的配置</span></div><div class="line">make -j4  <span class="comment"># 虚拟机是双核的，四线程</span></div><div class="line">sudo make install</div><div class="line"><span class="built_in">cd</span> ~</div></pre></td></tr></table></figure>
+</li>
+<li><p>将服务器端生成的秘钥加入<code>passwd</code>（如果没有自行创建）</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">vim passwd</div><div class="line">K5YEC0KYPFBAAPJCOVY3:qM98Y4uT/kXEACaRKU+8rJvgY9F6/Vy6pxt7wB/W</div><div class="line"><span class="comment"># 修改passwd权限</span></div><div class="line">chmod 600 passwd</div></pre></td></tr></table></figure>
+</li>
+<li><p>创建挂载点</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">mkdir s3</div></pre></td></tr></table></figure>
+</li>
+<li><p>创建挂载目录</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">s3fs wangxin s3 -o passwd_file=passwd,use_path_request_style,url=http://vm14:9000,rw,uid=1000,gid=1000</div></pre></td></tr></table></figure>
+</li>
+<li><p>查看挂载目录</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">df -h |grep /home/ubuntu/s3</div></pre></td></tr></table></figure>
+<p><img src="https://vgy.me/fGslNv.png" alt=""></p>
+</li>
+</ul>
+<p>此时，可以在<code>vm15</code>上查看到服务器端上传的文件，并对文件进行修改，如果文件是只读的，需要进行授权处理，<code>chmod -R 755 s3/*</code>，在<code>vm15</code>上上传的文件同样可以再服务器端进行操作。</p>
+<h2 id="WebDav"><a href="#WebDav" class="headerlink" title="WebDav"></a>WebDav</h2><h3 id="服务器端-1"><a href="#服务器端-1" class="headerlink" title="服务器端"></a>服务器端</h3><ul>
+<li><p>安装<code>Docker</code></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">curl https://git.shuosc.org/snippets/5/raw | sudo sh</div><div class="line">sudo usermod -aG docker $(whoami)</div><div class="line"><span class="comment"># 配置加速器</span></div><div class="line">curl -sSL https://get.daocloud.io/daotools/set_mirror.sh | sh -s http://e85bc34e.m.daocloud.io</div><div class="line"><span class="comment"># 重启docker服务</span></div><div class="line">sudo service docker restart</div></pre></td></tr></table></figure>
+</li>
+<li><p>使用<code>docker-compose</code>进行<code>pull</code>镜像</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># 安装docker-compose,安装前确定已经安装pip3和python3</span></div><div class="line">sudo pip3 install docker-compose</div></pre></td></tr></table></figure>
+</li>
+<li><p>修改<code>docker-compose.yml</code>文件(格式很重要，不能使用<code>tab</code>只能使用空格)</p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"><span class="attr">version:</span> <span class="string">'2'</span></div><div class="line"></div><div class="line"><span class="attr">services:</span></div><div class="line"><span class="attr">  db:</span></div><div class="line"><span class="attr">    image:</span> <span class="string">mariadb</span></div><div class="line"><span class="attr">    restart:</span> <span class="string">always</span></div><div class="line"><span class="attr">    volumes:</span></div><div class="line"><span class="bullet">      -</span> <span class="string">/home/ubuntu/mariadb:/var/lib/mysql</span></div><div class="line"><span class="attr">    environment:</span></div><div class="line"><span class="bullet">      -</span> <span class="string">MYSQL_ROOT_PASSWORD=centos</span></div><div class="line"><span class="bullet">      -</span> <span class="string">MYSQL_PASSWORD=centos</span></div><div class="line"><span class="bullet">      -</span> <span class="string">MYSQL_DATABASE=nextcloud</span></div><div class="line"><span class="bullet">      -</span> <span class="string">MYSQL_USER=nextcloud</span></div><div class="line"></div><div class="line"><span class="attr">  app:</span></div><div class="line"><span class="attr">    image:</span> <span class="string">nextcloud</span></div><div class="line"><span class="attr">    ports:</span></div><div class="line"><span class="bullet">      -</span> <span class="number">8080</span><span class="string">:80</span></div><div class="line"><span class="attr">    links:</span></div><div class="line"><span class="bullet">      -</span> <span class="string">db</span></div><div class="line"><span class="attr">    volumes:</span></div><div class="line"><span class="bullet">      -</span> <span class="string">/home/ubuntu/nextcloud:/var/www/html/data</span></div></pre></td></tr></table></figure>
+</li>
+<li><p>创建<code>docker-compose.yml</code>中使用的目录</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">mkdir mariadb</div><div class="line">mkdir nextcloud</div></pre></td></tr></table></figure>
+</li>
+<li><p>启动<code>docker-compose</code></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">sudo docker-compose up -d</div><div class="line">sudo docker run -d nextcloud -v nextcloud:/var/www/html</div></pre></td></tr></table></figure>
+</li>
+<li><p>打开浏览器访问</p>
+</li>
+<li><p>网页端口上传的文件在<code>vm14</code>中的以下路径中可以查看</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo ls nextcloud/mustard/files</div></pre></td></tr></table></figure>
+<p><img src="https://vgy.me/Ha8xqc.png" alt=""></p>
+</li>
+</ul>
+<h3 id="客户端-1"><a href="#客户端-1" class="headerlink" title="客户端"></a>客户端</h3><ul>
+<li><p>安装<code>davfs2</code></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo apt install davfs2</div></pre></td></tr></table></figure>
+</li>
+<li><p>创建挂载点</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">mkdir davfs</div></pre></td></tr></table></figure>
+</li>
+<li><p>创建挂载目录</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">mount -t davfs http://lab1:8080/remote.php/webdav davfs</div></pre></td></tr></table></figure>
+</li>
+<li><p>赋权</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">sudo chown -R wangxin:wangxin davfs </div><div class="line"><span class="comment"># 查看文件</span></div><div class="line">ls davfs</div></pre></td></tr></table></figure>
+<p>​</p>
+</li>
+</ul>
+</div><div class="article-meta" style="max-width:800px"><div class="tags"><i class="icon icon-tag"></i><ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/minio/">minio</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/nfs/">nfs</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/webdav/">webdav</a><span class="tag-list-count">1</span></li></ul></div><div class="categories"><i class="icon icon-category"></i><ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/技术/">技术</a><span class="category-list-count">24</span></li></ul></div></div><ul class="navication"><li class="home"><a href="/"><i class="icon icon-home"></i></a></li><li><a href="/p/920e92d1.html"><i class="icon icon-arror-left"></i></a></li><li><a href="/p/f688dfae.html"><i class="icon icon-arror-right"></i></a></li></ul><div class="page-footer"><div class="top"><ul class="social"><li><a href="https://github.com/" title="Github" target="_blank"><i class="icon icon-github"></i></a></li></ul></div><div class="bottom"><p class="copyright">© 2017 Mr Wang's blog<br><small>POWER BY <a href="https://hexo.io" target="_blank">HEXO</a></small><small>, THEME BY <a href="https://github.com/BoizZ/hexo-theme-laughing" target="_blank">LAUGHING</a></small></p></div></div></div><script>var wrap = document.getElementById('wrap');
+window.onload = function () {
+  wrap.className += ' done';
+}</script></body></html>

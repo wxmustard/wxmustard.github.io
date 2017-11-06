@@ -1,0 +1,48 @@
+<!DOCTYPE html><html lang="zh-cn"><head><meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=Edge"><meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no"><meta name="format-detection" content="telephone=no"><meta name="format-detection" content="email=no"><meta name="description" content="Mr Wang's blog"><meta name="keywords" content="Hexo, Gruntjs, Nodejs, Reactjs, Vuejs"><title>git使用教程 - Mr Wang's blog</title><link rel="stylesheet" href="/css/main_style.min.css"><link rel="icon" href="/favicon.ico"></head><body><input id="navi" type="checkbox"><ul class="main-navication"><li><a href="/"><span>Home</span></a></li><li><a href="https://github.com"><span>Github</span></a></li><li><a href="https://www.v2ex.com/"><span>V2EX</span></a></li></ul><div class="wrapper" id="wrap"><div class="post-header"><label class="navi-button light" for="navi">MENU</label><img class="background" src="//s3.shu.aixinwu.org/wx_post_bg.jpg"><div class="post-title"><h1 class="title">git使用教程</h1><ul class="meta"><li><i class="icon icon-author"></i>Mustard Wang</li><li><i class="icon icon-clock"></i>4 Minutes</li><li><i class="icon icon-calendar"></i>2017年10月2日</li></ul></div></div><div class="article-content" style="max-width:800px"><ul>
+<li><p>进入 <a href="https://git.shuosc.cn/dashboard/projects" target="_blank" rel="external">https://git.shuosc.cn/dashboard/projects</a> 建立一个新的项目<code>new project</code></p>
+</li>
+<li><p>公钥上传至服务器</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">ls .ssh</div><div class="line">ssh-keygen -t rsa</div><div class="line">ls .ssh</div><div class="line">cat .ssh/id_rsa.pub</div></pre></td></tr></table></figure>
+<p>将<code>id_rsa.pub</code>中的内容拷贝到 <a href="https://git.shuosc.cn/profile/keys" target="_blank" rel="external">https://git.shuosc.cn/profile/keys</a> 中</p>
+</li>
+<li><p>验证是否成功</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ssh -T git@git.shuosc.cn</div></pre></td></tr></table></figure>
+<p>出现用户名即为连接成功</p>
+</li>
+<li><p>建立一个工作目录来保存代码等文档</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">mkdir workmeau</div></pre></td></tr></table></figure>
+</li>
+<li><p>进入工作目录，将目录中的文档克隆到git中</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">cd</span> workmeau </div><div class="line">workmeau git <span class="built_in">clone</span> ://git@git.shuosc.cn/wangxin/linux-note.git</div></pre></td></tr></table></figure>
+</li>
+<li><p>此时，工作目录下会出现一个<code>linux-note</code>文件夹，里面包含了需要上传的文档，进入此目录会出现<code>linux-note git:(master) ✗</code>，代表<code>git</code>的主干，<code>✗</code>代表文件尚未提交，下面对文件进行跟踪和提交</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">cd</span> linux-note</div><div class="line">git status <span class="comment"># 跟踪文件,检查目前所做的修改</span></div><div class="line">git add -A <span class="comment"># 暂存需要提交的文件</span></div><div class="line">git commit -m <span class="string">'firsh push'</span>  <span class="comment"># 提交已暂存的文件</span></div><div class="line"><span class="comment"># 提示 please tell me who you are</span></div><div class="line">git config --global user.email <span class="string">"wangxin175@shu.edu.cn"</span></div><div class="line">git config --global user.name <span class="string">"wangxin"</span></div><div class="line">git commit -m <span class="string">'first push'</span></div><div class="line">git push origin master <span class="comment"># 将文件提交到服务器</span></div><div class="line"><span class="comment"># 将文件从远程下载至本地</span></div><div class="line">git <span class="built_in">clone</span> git@git.shuosc.cn:wangxin/wangxin.shuosc.cn.git </div><div class="line"><span class="comment"># 添加远程账户</span></div><div class="line">git remote add github git@github.com:wxmustard/wxmustard.github.io.git</div></pre></td></tr></table></figure>
+<blockquote>
+<p>​</p>
+<p><img src="https://vgy.me/m9OQXI.png" alt="流程"></p>
+<p>​</p>
+</blockquote>
+<p>​</p>
+<blockquote>
+<ul>
+<li>Workspace：工作区</li>
+<li>Index / Stage：暂存区</li>
+<li>Repository：仓库区（或本地仓库）</li>
+<li>Remote：远程仓库</li>
+</ul>
+</blockquote>
+</li>
+</ul>
+<h2 id="在github上提交文件后没有贡献值？"><a href="#在github上提交文件后没有贡献值？" class="headerlink" title="在github上提交文件后没有贡献值？"></a>在github上提交文件后没有贡献值？</h2><ul>
+<li><p>确认提交的用户是否是当前用户</p>
+</li>
+<li><p>进入工作目录下修改用户以及邮箱</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">git config --global user.name wxmustard </div><div class="line">git config --global user.email mustard@live.cn</div></pre></td></tr></table></figure>
+<p>​</p>
+<p>​</p>
+</li>
+</ul>
+</div><div class="article-meta" style="max-width:800px"><div class="tags"><i class="icon icon-tag"></i><ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/git/">git</a><span class="tag-list-count">1</span></li></ul></div><div class="categories"><i class="icon icon-category"></i><ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/技术/">技术</a><span class="category-list-count">24</span></li></ul></div></div><ul class="navication"><li class="home"><a href="/"><i class="icon icon-home"></i></a></li><li><a href="/p/36d36890.html"><i class="icon icon-arror-left"></i></a></li><li><a href="/p/520142e0.html"><i class="icon icon-arror-right"></i></a></li></ul><div class="page-footer"><div class="top"><ul class="social"><li><a href="https://github.com/" title="Github" target="_blank"><i class="icon icon-github"></i></a></li></ul></div><div class="bottom"><p class="copyright">© 2017 Mr Wang's blog<br><small>POWER BY <a href="https://hexo.io" target="_blank">HEXO</a></small><small>, THEME BY <a href="https://github.com/BoizZ/hexo-theme-laughing" target="_blank">LAUGHING</a></small></p></div></div></div><script>var wrap = document.getElementById('wrap');
+window.onload = function () {
+  wrap.className += ' done';
+}</script></body></html>

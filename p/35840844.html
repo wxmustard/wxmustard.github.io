@@ -1,0 +1,35 @@
+<!DOCTYPE html><html lang="zh-cn"><head><meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=Edge"><meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no"><meta name="format-detection" content="telephone=no"><meta name="format-detection" content="email=no"><meta name="description" content="Mr Wang's blog"><meta name="keywords" content="Hexo, Gruntjs, Nodejs, Reactjs, Vuejs"><title>DNS解析+基础知识 - Mr Wang's blog</title><link rel="stylesheet" href="/css/main_style.min.css"><link rel="icon" href="/favicon.ico"></head><body><input id="navi" type="checkbox"><ul class="main-navication"><li><a href="/"><span>Home</span></a></li><li><a href="https://github.com"><span>Github</span></a></li><li><a href="https://www.v2ex.com/"><span>V2EX</span></a></li></ul><div class="wrapper" id="wrap"><div class="post-header"><label class="navi-button light" for="navi">MENU</label><img class="background" src="//s3.shu.aixinwu.org/wx_post_bg.jpg"><div class="post-title"><h1 class="title">DNS解析+基础知识</h1><ul class="meta"><li><i class="icon icon-author"></i>Mustard Wang</li><li><i class="icon icon-clock"></i>1 Minutes</li><li><i class="icon icon-calendar"></i>2017年10月13日</li></ul></div></div><div class="article-content" style="max-width:800px"><h2 id="DNS解析"><a href="#DNS解析" class="headerlink" title="DNS解析"></a>DNS解析</h2><ul>
+<li><p>人们习惯记忆域名，但机器间互相只认<code>IP</code>地址，域名与<code>IP</code>地址之间是多对一的关系，一个<code>IP</code>地址不一定只对应一个域名，且一个域名只可以对应一个<code>IP</code>地址，它们之间的转换工作称为域名解析，域名解析需要由专门的域名解析服务器来完成，整个过程是自动进行的。</p>
+</li>
+<li><p>每一个<code>DNS</code>服务器包含了它所管理的<code>DNS</code>命名空间的所有资源记录，常见的资源记录类型有：</p>
+<p>| 类型名称  | 说明                                       |<br>| :—: | :————————————— |<br>|   A   | 地址，域名—&gt; IPV4                           |<br>| AAAA  | 域名—&gt;IPV6                               |<br>|  MX   | 邮件交换器，用于邮件的收发。用于电子邮件系统发邮件时根据收信人的地址后缀来定位邮件服务器 |<br>| CNAME | 别名，可以将注册的不同域名都转到一个域名记录上，由这个域名记录统一解析管理，与A记录不同的是，CNAME别名记录设置的可以是一个域名的描述而不一定是IP地址 |<br>|  NS   | 子域名，指定由哪个DNS服务器来解析域名                     |<br>|  TXT  | 无关紧要                                     |</p>
+</li>
+<li><p>主机</p>
+</li>
+<li><p>线路：<code>DNS</code>服务器插的网线，如移动，联通，电信，教育网</p>
+</li>
+<li><p>记录值</p>
+</li>
+<li><p><code>MX</code>优先级：只有<code>MX</code>类型才会使用，从0到10，0的优先级最高，10最低</p>
+</li>
+</ul>
+<hr>
+<h4 id="邮件"><a href="#邮件" class="headerlink" title="邮件"></a>邮件</h4><p>收邮件： </p>
+<ul>
+<li><code>POP3</code>  将服务器上的邮件全部下载至本地</li>
+<li><code>IMAP</code> 仅仅显示摘要，用户使用时再下载</li>
+</ul>
+<p>发邮件：SMTP</p>
+<hr>
+<h4 id="URI-与-URL"><a href="#URI-与-URL" class="headerlink" title="URI 与 URL"></a>URI 与 URL</h4><ul>
+<li><code>URI</code> :uniform resource identifier，统一资源标识符</li>
+<li><code>URL</code> :uniform resource locator，统一资源定位器</li>
+<li><code>URN</code>:uniform resource name，统一资源命名</li>
+</ul>
+<blockquote>
+<p>我的理解是，urn告诉我们这个东西叫什么，url告诉我去哪里可以找到它。</p>
+</blockquote>
+</div><div class="article-meta" style="max-width:800px"><div class="tags"><i class="icon icon-tag"></i><ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/DNS/">DNS</a><span class="tag-list-count">1</span></li></ul></div><div class="categories"><i class="icon icon-category"></i><ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/技术/">技术</a><span class="category-list-count">24</span></li></ul></div></div><ul class="navication"><li class="home"><a href="/"><i class="icon icon-home"></i></a></li><li><a href="/p/422f71fe.html"><i class="icon icon-arror-left"></i></a></li><li><a href="/p/7bbece49.html"><i class="icon icon-arror-right"></i></a></li></ul><div class="page-footer"><div class="top"><ul class="social"><li><a href="https://github.com/" title="Github" target="_blank"><i class="icon icon-github"></i></a></li></ul></div><div class="bottom"><p class="copyright">© 2017 Mr Wang's blog<br><small>POWER BY <a href="https://hexo.io" target="_blank">HEXO</a></small><small>, THEME BY <a href="https://github.com/BoizZ/hexo-theme-laughing" target="_blank">LAUGHING</a></small></p></div></div></div><script>var wrap = document.getElementById('wrap');
+window.onload = function () {
+  wrap.className += ' done';
+}</script></body></html>
