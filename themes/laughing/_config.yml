@@ -3,9 +3,9 @@ favicon: /favicon.ico
 # SEO
 keywords: Hexo, Gruntjs, Nodejs, Reactjs, Vuejs
 # Header
-page_background: //s3.shu.aixinwu.org/wx_page_bg.jpg
+page_background: /wrapper.jpg
 page_menu_button: dark
-post_background: //s3.shu.aixinwu.org/wx_post_bg.jpg
+post_background: /wrapper.jpg
 post_menu_button: light
 title_plancehold: 随笔
 author:
