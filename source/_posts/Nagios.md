@@ -1,3 +1,15 @@
+---
+title: Nagios集群监控工具
+author: mustard
+date: 2017-11-10 19:58:31
+tags:
+  - ubuntu
+  - nagios
+  - opsview
+categories:
+  - 技术
+---
+
 # Nagios
 
 ## 安装必备软件
