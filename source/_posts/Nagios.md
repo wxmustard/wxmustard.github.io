@@ -61,3 +61,4 @@ http://nagios-cn.sourceforge.net/nagios-cn/beginning.html#quickstart-ubuntu
 - 至此，在本地可以通过访问`http://111.186.106.99:32768/nagios/`来查看`nagios`
 
   ![](https://vgy.me/3Sxg9m.png)
+
