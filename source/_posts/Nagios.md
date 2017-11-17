@@ -25,7 +25,7 @@ sudo apt install libgd2-dev
 
 http://nagios-cn.sourceforge.net/nagios-cn/beginning.html#quickstart-ubuntu
 
-** 这种方式有点问题，使用下面的方式进行安装
+**这种方式有点问题，使用下面的方式进行安装**
 
 
 
