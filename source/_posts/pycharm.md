@@ -5,6 +5,7 @@ date: 2017-11-22 13:41:48
 tags:
   - ubuntu
   - python
+  - libvirt
 categories:
   - 技术
 
@@ -25,4 +26,19 @@ categories:
   - 解决方法：`sudo pip3 install --upgrade beautifulsoup4`
 
     ​
+
+    ​
+
+
+## libvirt api
+
+### libvirt python api
+
+```bash
+# 安装libvirt
+# 首先ubuntu系统需要安装libvirt-dev
+sudo apt install libvirt-dev
+# ubuntu只有在安装了libvirt-dev后才能正常安装libvirt-python
+sudo pip3 install libvirt-python
+```
 
