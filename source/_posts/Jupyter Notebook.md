@@ -10,7 +10,7 @@ categories:
 
 > **Jupyter Notebook** 是一个开源的 Web 应用程序，可以用来创建和共享包含动态代码、方程式、可视化及解释性文本的文档。其应用于包括：数据整理与转换，数值模拟，统计建模，机器学习等等。
 
-* 安装Jupyter Notebook
+* 安装`Jupyter Notebook`
 
   ```bash
   python --version
@@ -34,7 +34,7 @@ categories:
 
   sha1:7cfdbedde92f:908d917657438f8cd6e56fc93c769830f0c7a510
 
-* 配置Jupyter Notebook
+* 配置`Jupyter Notebook`
 
   ```bash
   # 首先创建目录
