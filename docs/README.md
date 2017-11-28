@@ -12,7 +12,7 @@
 
 - [libvirt api](https://github.com/wxmustard/wxmustard.github.io/blob/master/source/_posts/libvirt.md)
 
-  使用`libvirt api`绑定`python`的方式创建虚拟机
+  使用`libvirt api`绑定`python`的方式创建、启动、关闭、销毁域
 
 - [Mysql connection](https://github.com/wxmustard/wxmustard.github.io/blob/master/source/_posts/Mysql%20Remote%20Connection.md)
 
