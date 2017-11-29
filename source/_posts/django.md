@@ -385,3 +385,43 @@ categories:
 
   ![](https://vgy.me/PGFZzw.png)
 
+- 博客目录结构如下
+
+  ```bash
+  blog
+  ├── blog
+  │   ├── __init__.py
+  │   ├── __pycache__
+  │   │   ├── __init__.cpython-35.pyc
+  │   │   ├── settings.cpython-35.pyc
+  │   │   ├── urls.cpython-35.pyc
+  │   │   └── wsgi.cpython-35.pyc
+  │   ├── settings.py
+  │   ├── urls.py
+  │   └── wsgi.py
+  ├── blog_wx
+  │   ├── admin.py
+  │   ├── apps.py
+  │   ├── __init__.py
+  │   ├── migrations
+  │   │   ├── 0001_initial.py
+  │   │   ├── __init__.py
+  │   │   └── __pycache__
+  │   │       ├── 0001_initial.cpython-35.pyc
+  │   │       └── __init__.cpython-35.pyc
+  │   ├── models.py
+  │   ├── __pycache__
+  │   │   ├── admin.cpython-35.pyc
+  │   │   ├── __init__.cpython-35.pyc
+  │   │   ├── models.cpython-35.pyc
+  │   │   └── views.cpython-35.pyc
+  │   ├── templates
+  │   │   ├── base.html
+  │   │   └── index.html
+  │   ├── tests.py
+  │   └── views.py
+  ├── db.sqlite3
+  └── manage.py
+  ```
+
+  ​
