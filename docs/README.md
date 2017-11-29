@@ -6,7 +6,11 @@
 
   `django`在`ubuntu`环境下的安装，以及如何搭建互不干扰的`python`开发环境；
 
-  新增：1 `django`的基本使用命令
+  新增：1. `django`的基本使用命令
+
+  ​	    2.`django`的模板（未完待续）
+
+  ​	    3.使用`django`搭建一个blog（超级丑，别问我为什么）
 
 - [Jupyter Notebook](https://github.com/wxmustard/wxmustard.github.io/blob/master/source/_posts/Jupyter%20Notebook.md)
 
@@ -25,4 +29,5 @@
   正则表达式的基本语法
 
 - ​
+
 

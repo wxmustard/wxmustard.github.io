@@ -136,6 +136,18 @@ categories:
   link http://127.0.0.1:8000/add/?a=4&b=5
   ```
 
+- 初始化数据库
+
+  ```bash
+  python3 manage.py migrate 
+  ```
+
+- 忘记数据库的用户名和密码
+
+  ```bash
+  python3 manage.py createsuperuser
+  ```
+
 - 文件结构如下
 
   ```bash
@@ -170,5 +182,206 @@ categories:
       └── wsgi.py
   ```
 
-  ​
+
+
+### 模板
+
+- 在`app`目录下创建模板文件夹`templates`
+
+  ```bash
+  learn
+  ├── admin.py
+  ├── apps.py
+  ├── __init__.py
+  ├── migrations
+  │   ├── __init__.py
+  │   └── __pycache__
+  │       └── __init__.cpython-35.pyc
+  ├── models.py
+  ├── __pycache__
+  │   ├── admin.cpython-35.pyc
+  │   ├── __init__.cpython-35.pyc
+  │   ├── models.cpython-35.pyc
+  │   └── views.cpython-35.pyc
+  ├── templates
+  │   └── home.html
+  ├── tests.py
+  └── views.py
+  ```
+
+#### 显示简单字符串
+
+- 修改`views.py`
+
+  ```python
+  from django.shortcuts import render
+  #coding:utf-8
+  from django.http import HttpResponse
+  def home(request):
+      string = u"你是无意穿堂风，却偏偏引山洪"
+      return render(request, 'home.html', {'string': string}) 
+  ```
+
+- 修改`templates/home.html`
+
+  ```html
+  <!DOCTYPE html>
+  <html>
+  <head>
+      <title>欢迎光临</title>
+  </head>
+  <body>
+  {{string}}
+  </body>
+  </html>
+  ```
+
+#### 还有很多种模板显示方法，未完待续
+
+
+
+## 搭建一个丑哭了的博客
+
+- 创建项目等前期工作
+
+  ```bash
+  django-admin startproject blog
+  cd blog
+  python3 manage.py startapp blog_wx
+  # 初始化数据库
+  python3 manage.py migrate 
+  # 添加app到blog/blog/setting.py
+  vim blog/blog/setting.py
+  INSTALLED_APPS = [
+      'django.contrib.admin',
+      'django.contrib.auth',
+      'django.contrib.contenttypes',
+      'django.contrib.sessions',
+      'django.contrib.messages',
+      'django.contrib.staticfiles',
+      'blog_wx',
+  ]
+  ```
+
+- 访问后台应用
+
+  ```bash
+  python3 manage.py runserver
+  ```
+
+  打开浏览器访问http://127.0.0.1:8000/admin/，输入用户名和密码，进入后台管理界面
+
+  ![](https://vgy.me/KMNqpO.png)
+
+- 设计数据库（blog/blog_wx/models.py）
+
+  ```python
+  from django.db import models
+  from django.contrib import admin
+  # Create your models here.
+  class BlogsPost(models.Model):
+      title = models.CharField(max_length = 150)
+      body = models.TextField()
+      timestamp = models.DateTimeField()
+   
+  class BlogsPostAdmin(admin.ModelAdmin):
+      list_display = ('title','timestamp')
+
+  admin.site.register(BlogsPost,BlogsPostAdmin)
+  ```
+
+- 再次初始化数据库
+
+  ```bash
+  python3 manage.py makemigrations blog_wx
+  python3 manage.py migrate   
+  # 不建议使用python3 manage.py syncdb
+  ```
+
+- 再次后台应用
+
+  ```bash
+  python3 manage.py runserver
+  ```
+
+  ![](https://vgy.me/8hzmnx.png)
+
+  ![](https://vgy.me/nTGaQG.png)
+
+  > **创建blog的公共部分**
+  >
+  > 从Django的角度看，一个页面具有三个典型的组件：
+  >
+  > 一个模板（template）：模板负责把传递进来的信息显示出来。
+  >
+  > 一个视图（view）：视图负责从数据库获取需要显示的信息。
+  >
+  > 一个URL模式：它负责把收到的请求和你的试图函数匹配，有时候也会向视图传递一些参数。
+
+- 创建模板
+
+  - 在blog_wx(app)目录下创建`templates`文件夹
+
+  - base.html 内容如下
+
+    ```html
+    <html>
+        <style type="text/css">
+          body{color:rgb(168, 166, 35);background:rgb(74, 99, 49);padding:0 5em;margin:0}
+          h1{padding:2em 1em;background:#675}
+          h2{color:rgb(52, 54, 51);border-top:1px dotted #fff;margin-top:2em}
+          p{margin:1em 0}
+        </style>
+       
+        <body>
+          <h1>Mustard</h1>
+          <h3>你是无意穿堂风，却偏偏引山洪</h3>
+          {% block content %}
+          {% endblock %}
+        </body>
+    </html>
+    ```
+
+  - index.html 内容如下
+
+    ```html
+    {% extends "base.html" %}
+        {% block content %}
+            {% for post in blog_list %}
+            <h2>{{ post.title }}</h2>
+            <p>{{ post.timestamp }}</p>
+            <p>{{ post.body }}</p>
+            {% endfor%}
+        {% endblock %}
+    ```
+
+  - 修改视图函数 blog/blog_wx/views.py
+
+    ```python
+    from django.shortcuts import render
+    from blog_wx.models import BlogsPost
+    from django.shortcuts import render_to_response
+    #coding:utf-8
+    # Create your views here.
+    def index(request):
+        blog_list = BlogsPost.objects.all()
+        return render_to_response('index.html',{'blog_list':blog_list})
+    ```
+
+  - 修改网址入口文件 blog/blog/urls.py
+
+    ```python
+    #coding=utf-8
+    from django.conf.urls import url
+    from django.contrib import admin
+    from blog_wx import views as blog_wx
+    urlpatterns = [
+        url(r'^index/', blog_wx.index),
+        url(r'^admin/', admin.site.urls),
+    ]
+    ```
+
+- 查看前台页面(丑哭了的页面就在下面)
+
+  ![](https://vgy.me/PGFZzw.png)
 
