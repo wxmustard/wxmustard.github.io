@@ -4,7 +4,9 @@
 
 - [Django](https://github.com/wxmustard/wxmustard.github.io/blob/master/source/_posts/django.md)
 
-  `django`在`ubuntu`环境下的安装，以及如何搭建互不干扰的`python`开发环境
+  `django`在`ubuntu`环境下的安装，以及如何搭建互不干扰的`python`开发环境；
+
+  新增：1 `django`的基本使用命令
 
 - [Jupyter Notebook](https://github.com/wxmustard/wxmustard.github.io/blob/master/source/_posts/Jupyter%20Notebook.md)
 
