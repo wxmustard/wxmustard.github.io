@@ -148,28 +148,35 @@ categories:
   python3 manage.py createsuperuser
   ```
 
+- 同步（合并）数据库
+
+  ```bash
+  python3 manage.py makemigrations
+  python3 manage.py migrate
+  ```
+
 - 文件结构如下
 
   ```bash
   mysite
-  ├── db.sqlite3
-  ├── learn
-  │   ├── admin.py
+  ├── db.sqlite3 # 数据库文件
+  ├── learn # 应用app
+  │   ├── admin.py # 管理数据库后台
   │   ├── apps.py
   │   ├── __init__.py
-  │   ├── migrations
+  │   ├── migrations  
   │   │   ├── __init__.py
   │   │   └── __pycache__
   │   │       └── __init__.cpython-35.pyc
-  │   ├── models.py
+  │   ├── models.py # 定义数据库中的表，类似于MVC中的M
   │   ├── __pycache__
   │   │   ├── admin.cpython-35.pyc
   │   │   ├── __init__.cpython-35.pyc
   │   │   ├── models.cpython-35.pyc
   │   │   └── views.cpython-35.pyc
-  │   ├── tests.py
-  │   └── views.py
-  ├── manage.py
+  │   ├── tests.py # 测试代码文件
+  │   └── views.py # 响应客户请求返回html页面，代码逻辑处理的主要地点
+  ├── manage.py # 管理项目
   └── mysite
       ├── __init__.py
       ├── __pycache__
@@ -177,9 +184,9 @@ categories:
       │   ├── settings.cpython-35.pyc
       │   ├── urls.cpython-35.pyc
       │   └── wsgi.cpython-35.pyc
-      ├── settings.py
-      ├── urls.py
-      └── wsgi.py
+      ├── settings.py  # 整个网站的配置文件
+      ├── urls.py  # 一个url对应与views.py中的一个函数
+      └── wsgi.py  # Python应用程序或框架和web服务器之间的接口
   ```
 
 
@@ -238,7 +245,23 @@ categories:
 
 #### 还有很多种模板显示方法，未完待续
 
+### 搭建`Django`的过程
 
+- 创建项目
+
+- 创建应用
+
+- 将应用添加到`setting.py`文件中
+
+- 编写`app/view.py`文件
+
+- 修改`urls.py`文件，使之对应到应用的`views.py` 中的函数
+
+- 运行项目 runserver
+
+- 打开浏览器访问
+
+  ​
 
 ## 搭建一个丑哭了的博客
 
