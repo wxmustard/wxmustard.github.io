@@ -52,7 +52,7 @@ categories:
 
   ```
 
-  ![](https://vgy.me/nS94OF.png)
+  ![ ](https://vgy.me/nS94OF.png)
 
   ​
 
@@ -449,11 +449,11 @@ categories:
 
   ​
 
-###  使用`django`调用`python`脚本
+##使用`django`调用`python`脚本
 
 - 连接远程服务器
 
-  ```bash
+  ```python
   # 首先安装必要的python第三方库
   sudo apt install python-crypto python-paramiko python-devel
   # 具体的使用
@@ -464,6 +464,54 @@ categories:
   ssh.connect("远程主机ip",端口,"用户名","密码")
   # 执行命令
   stdin, stdout, stderr = ssh.exec_command("xml_create")
+  ```
+
+- 使用上述方法完成远程创建，销毁虚拟机
+
+  ```python
+  from django.shortcuts import render
+  from django.http import HttpResponse
+  from django.shortcuts import render_to_response
+  import paramiko
+  # Create your views here.
+
+  # 连接远程服务器功能函数
+  def ssh_remote(ip,name,passwd):
+      ssh = paramiko.SSHClient()
+      ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy)
+      ssh.connect(ip,22,name,passwd)
+      return ssh
+
+  def kvm(request):
+      return render_to_response('kvm.html')
+  def kvm_create(request):
+      if 'create_name' in request.GET:
+          name = request.GET['create_name']
+      else:
+          name = '空'
+      #ssh = paramiko.SSHClient()
+      #ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+      #ssh.connect("111.186.106.99",22,"ubuntu","ubuntu")
+      ssh = ssh_remote("111.186.106.99","ubuntu","ubuntu")
+      xml_create = "/home/ubuntu/kvm/wx/xml_create.sh " + name 
+      print(xml_create)
+      stdin, stdout, stderr = ssh.exec_command(xml_create)
+      create_py = "python3 /home/ubuntu/kvm/wx/wx_create.py vm" + name
+      stdin, stdout, stderr = ssh.exec_command(create_py)
+      message = "虚拟机已创建成功，地址为192.168.110.1" + name 
+      return HttpResponse(message)
+
+  def kvm_destroy(request):
+      if 'down_name' in request.GET:
+          name = request.GET['down_name']
+      else:
+          name = '空'
+      ssh = ssh_remote("111.186.106.99","ubuntu","ubuntu")
+      down_py = "python3 /home/ubuntu/kvm/wx/wx_shut.py vm" + name
+      stdin, stdout, stderr = ssh.exec_command(down_py)
+      message = "虚拟机已关闭"
+      return HttpResponse(message)
+
   ```
 
   ​

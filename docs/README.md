@@ -12,6 +12,8 @@
 
   ​	    3.使用`django`搭建一个blog（超级丑，别问我为什么）
 
+  ​	    4.使用`django`调用`python`脚本，比如远程创建虚拟机等操作
+
 - [Jupyter Notebook](https://github.com/wxmustard/wxmustard.github.io/blob/master/source/_posts/Jupyter%20Notebook.md)
 
   `Jupyter Notebook`的安装及配置
