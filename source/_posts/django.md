@@ -448,3 +448,22 @@ categories:
   ```
 
   ​
+
+###  使用`django`调用`python`脚本
+
+- 连接远程服务器
+
+  ```bash
+  # 首先安装必要的python第三方库
+  sudo apt install python-crypto python-paramiko python-devel
+  # 具体的使用
+  import paramiko
+  ssh = paramiko.SSHClient()
+  ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+  # ssh.connect("111.186.106.99",22,"ubuntu","ubuntu")
+  ssh.connect("远程主机ip",端口,"用户名","密码")
+  # 执行命令
+  stdin, stdout, stderr = ssh.exec_command("xml_create")
+  ```
+
+  ​
