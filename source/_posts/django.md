@@ -273,6 +273,7 @@ categories:
   python3 manage.py startapp blog_wx
   # 初始化数据库
   python3 manage.py migrate 
+  # 配置项目
   # 添加app到blog/blog/setting.py
   vim blog/blog/setting.py
   INSTALLED_APPS = [
@@ -296,12 +297,13 @@ categories:
 
   ![](https://vgy.me/KMNqpO.png)
 
-- 设计数据库（blog/blog_wx/models.py）
+- 设计数据库（blog/blog_wx/models.py）**模型定义**
 
   ```python
   from django.db import models
   from django.contrib import admin
   # Create your models here.
+  # 每一个模型类都会被映射成数据库中的一个数据表，而类属性被映射成数据字段
   class BlogsPost(models.Model):
       title = models.CharField(max_length = 150)
       body = models.TextField()
@@ -316,7 +318,9 @@ categories:
 - 再次初始化数据库
 
   ```bash
+  # 生成数据移植文件(makemigrations)，就是指将models.py中定义的数据表转换程数据库生成脚本的过程，在此过程中Django会比较models.py中的模型与已有数据库之间的差异，如果没有差异就不会做任何工作，如果有修改会将修改的内容同步到数据库中，这条命令会生成一个中间移植文件，文件保存在app/migrations/下
   python3 manage.py makemigrations blog_wx
+  # 在模型的修改过程中可以随时调用makemigration命令来生成中间移植文件，但是如果想要文件生效、修改真是的数据库时，需要使用migrate命令
   python3 manage.py migrate   
   # 不建议使用python3 manage.py syncdb
   ```
@@ -447,7 +451,21 @@ categories:
   └── manage.py
   ```
 
-  ​
+
+## `Django`框架中`models.py`中的数据类型
+
+| 字段类型          | 描述                                       |
+| ------------- | ---------------------------------------- |
+| CharField     | 字符串字段，<input type="text">                |
+| TextField     | 大容量文本字段，<textarea>                       |
+| AutoField     | 自增的整数字段，通常充当数据库的主键，如果模型当中没有指定主键，Django会自动添加一个AutoField字段 |
+| EmailField    | 带有检查Email合法性的Charfield                   |
+| XMLField      | 具有XML合法性验证的                              |
+| IntegerField  | 用于保存整数                                   |
+| DataTimeField | 日期字段，<input type="text">、一个javascript日历和一个today快捷按键 |
+| URLField      | 用于保存URL                                  |
+
+
 
 ##使用`django`调用`python`脚本
 

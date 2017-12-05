@@ -65,7 +65,8 @@ sudo pip3 install libvirt-python
   	 	<address type='drive' controller='0' bus='1' target='0' unit='0'/>
   	 </disk>
   	 <disk type='file' device='disk'>
-  		<driver name='qemu' type='qcow2'/>
+  	ls
+         <driver name='qemu' type='qcow2'/>
           <source file='/home/ubuntu/kvm/wx/wx.qcow2'/>
           <target dev='hda' bus='ide'/>
        </disk>
@@ -203,3 +204,24 @@ sudo pip3 install libvirt-python
   ```
 
 - 运行取消定义文件即可
+
+### 编写`python`脚本并传参
+- 创建python脚本
+
+  ```python
+  import sys
+  print(sys.argv[1])
+  ```
+
+- 调用脚本
+
+  ```bash
+  python3 wx.python vm14
+  ```
+
+  ​
+
+
+
+
+
