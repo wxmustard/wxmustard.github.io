@@ -99,6 +99,17 @@ categories:
 
   ```
 
+- `requirements.txt`
+
+  > python项目中必须包含一个 requirements.txt 文件，用于记录所有依赖包及其精确的版本号。以便新环境部署。
+
+  ```bash
+  # 生成requirements.txt
+  pip3 freeze >requirements.txt
+  # 部署环境
+  pip3 install -r requirements.txt
+  ```
+
 - 定义视图
 
   ```python
