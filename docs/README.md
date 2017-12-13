@@ -34,6 +34,9 @@
 
   正则表达式的基本语法
 
-- ​
+- [ubuntu虚拟机 + hadoop + spark + scala](https://github.com/wxmustard/wxmustard.github.io/blob/master/source/_posts/hadoop%2Bspark%2Bscala.md)
+
+  - `kvm`虚拟机的创建
+  - `Hadoop`+`spark`+`scala`笔记
 
 

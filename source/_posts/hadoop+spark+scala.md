@@ -21,6 +21,19 @@ date: 2017-10-02 20:39:11
   wget http://mirrors.shuosc.org/http://mirrors.shuosc.org/ubuntu-releases/xenial/ubuntu-16.04.3-server-amd64.iso
   ```
 
+* 配置虚拟机网络
+
+  ```bash
+  sudo virsh net-edit default
+  # 选择第三个选项
+  ```
+
+  编辑`mac`与`IP`对应的文件
+
+  ```txt
+
+  ```
+
 * 创建虚拟镜像
 
   ```bash
