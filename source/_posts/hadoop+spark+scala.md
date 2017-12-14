@@ -31,7 +31,20 @@ date: 2017-10-02 20:39:11
   编辑`mac`与`IP`对应的文件
 
   ```txt
-
+  <network>
+    <name>default</name>
+    <uuid>b3f7605a-0d37-472c-ae7c-b51ab7b3f34c</uuid>
+    <forward mode='nat'/>
+    <bridge name='virbr0' stp='on' delay='0'/>
+    <mac address='52:54:00:c8:24:95'/>
+    <ip address='192.168.107.1' netmask='255.255.255.0'>
+      <dhcp>
+        <range start='192.168.107.2' end='192.168.107.254'/>
+        <host mac='52:54:00:33:07:01' name='vm01' ip='192.168.107.101'/>
+        <host mac='52:54:00:33:07:02' name='vm02' ip='192.168.107.102'/>
+      </dhcp>
+    </ip>
+  </network>
   ```
 
 * 创建虚拟镜像
