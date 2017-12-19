@@ -39,4 +39,7 @@
   - `kvm`虚拟机的创建
   - `Hadoop`+`spark`+`scala`笔记
 
+- [route](https://github.com/wxmustard/wxmustard.github.io/blob/master/source/_posts/route.md)
+
+  实现两台宿主机上的虚拟机间的相互通信
 

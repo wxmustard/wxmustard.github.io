@@ -13,6 +13,8 @@ categories:
 
 ### 实验环境
 
+![](https://vgy.me/kSitHc.png)
+
 - lab3主机(虚拟机vm01的ip为192.168.103.101)
 
   ```bash
