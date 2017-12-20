@@ -97,7 +97,7 @@ export NVM_DIR="$HOME/.nvm"
 tee -a ~/.zshrc << EOF
 NVM_NODEJS_ORG_MIRROR=http://npm.taobao.org/mirrors/node
 EOF
-source ~/.zshrc
+source ~/.zshrctuozhanbao
 nvm install node
 # 验证是否安装成功
 node -v
@@ -107,6 +107,7 @@ npm install -g hexo-cli
 git clone https://github.com/wxmustard/wxmustard.github.io.git
 cd wxmustard.github.io 
 npm install hexo --save 
+hexo g
 hexo d 
 hexo s
 ```
@@ -124,3 +125,27 @@ hexo s
   ```
 
   ​
+
+### 安装node.js
+
+- 下载node安装包 [node.js安装包下载地址](https://nodejs.org/dist/v8.9.3/node-v8.9.3-linux-x64.tar.xz)
+
+```bash
+wget https://nodejs.org/dist/v8.9.3/node-v8.9.3-linux-x64.tar.xz
+tar xvJf node-v8.9.3-linux-x64.tar.xz
+cd node-v8.9.3-linux-x64/bin
+./node -v
+# 建立软连接
+ln -s /usr/local/node-v0.10.28-linux-x64/bin/node /usr/local/bin/node
+ln -s /usr/local/node-v0.10.28-linux-x64/bin/npm /usr/local/bin/npm
+```
+
+- 使用nvm方式安装
+
+```bash
+wget -qO- https://raw.github.com/creationix/nvm/master/install.sh | sh
+# 退出shell，再进入
+nvm ls-remote 
+nvm install v8.9.3
+```
+
