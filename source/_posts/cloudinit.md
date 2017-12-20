@@ -8,3 +8,11 @@ categories:
  - 技术
 ---
 
+## 目标
+
+- 设置hostman、hosts
+
+- 添加ssh keys 到 .ssh/authorized_keys
+
+  ​
+
