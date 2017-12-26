@@ -10,6 +10,18 @@ categories:
 
 ---
 
+## 更改pypi源
+
+```bash
+vim ~/.pip/pip/conf
+# 以下是pip.conf文件中的内容，更改为阿里源
+[global]
+index-url=http://mirrors.aliyun.com/pypi/simple/
+trusted-host = mirrors.aliyun.com
+[list]
+format=columns
+```
+
 ## 搭建多个互不干扰的开发环境
 
 >在开发Python应用程序的时候，系统安装的Python3只有一个版本：3.4。所有第三方的包都会被`pip`安装到Python3的`site-packages`目录下。
@@ -53,6 +65,8 @@ categories:
   ```
 
   ![ ](https://vgy.me/nS94OF.png)
+
+  ​
 
   ​
 
@@ -544,3 +558,15 @@ categories:
   ```
 
   ​
+
+
+## 返回自定义的json格式数据
+
+```python
+from django.http import HttpResponse
+import json
+def get_an_apple(request):
+    resp = {'errorcode': 100, 'detail': 'Get success'}
+    return HttpResponse(json.dumps(resp), content_type="application/json")
+```
+

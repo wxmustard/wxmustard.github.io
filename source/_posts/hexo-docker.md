@@ -39,7 +39,7 @@ EXPOSE 4000
 
 上面的`Dockerfile`还存在一些问题，在`docker build`过程中默认使用`bin/sh`,而有些命令如`source`只有在`bin/bash`才能执行，所以使用`RUN /bin/bash -c 'source ~/.bashrc' `
 
-## 方法二：直接在容器中操作
+###方法二：直接在容器中操作
 
 - 创建容器
 
@@ -147,5 +147,23 @@ wget -qO- https://raw.github.com/creationix/nvm/master/install.sh | sh
 # 退出shell，再进入
 nvm ls-remote 
 nvm install v8.9.3
+```
+
+
+
+## 使用其他docker images完成hexo docker化
+
+```dockerfile
+FROM mhart/alpine-node:8
+
+MAINTAINER mustard ,<mustard@live.cn>
+
+RUN apk --update --no-progress add git 
+
+RUN npm install hexo-cli -g && git clone https://github.com/wxmustard/wxmustard.github.io.git \
+    && cd wxmustard.github.io/ && npm install 
+COPY start.sh /start.sh
+EXPOSE 4000
+ENTRYPOINT ["/start.sh"]
 ```
 
