@@ -498,7 +498,8 @@ format=columns
 
   ```python
   # 首先安装必要的python第三方库
-  sudo apt install python-crypto python-paramiko python-devel
+  sudo apt install python-crypto python-devel
+  sudo pip3 install paramiko
   # 具体的使用
   import paramiko
   ssh = paramiko.SSHClient()
