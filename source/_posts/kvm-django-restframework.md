@@ -131,7 +131,10 @@ categories:
     from rest_framework.decorators import api_view
     from rest_framework.response import Response
     from django.http import HttpResponse
-    import sys
+    import sys    
+    ​```
+
+    ​
     import json  # 返回json格式数据
     import libvirt
     import subprocess 
@@ -191,7 +194,10 @@ categories:
             domains = conn.listAllDomains(0)
             if len(domains) != 0:
                 for domain in domains:
-                    print(' '+domain.name())
+                    print(' '+domai    
+    ​```
+
+    ​n.name())
             conn.close()
             return render(request,'vps.html',{'data':domains})
     # 根据页面传回的json数据创建虚拟机
@@ -216,10 +222,7 @@ categories:
             dominfo = get_info(conn,kvmname)
             conn.close() 
             return HttpResponse(json.dumps(dominfo),content_type="application/json")
-    ```
-
-
-    # 虚拟机的关闭，删除，更新配置操作
+        # 虚拟机的关闭，删除，更新配置操作
     @api_view(['GET','DELETE','PATCH','PUT'])
     def kvm(request,name,format=None):
         conn = conn_remote('ubuntu','172.22.107.51')
@@ -240,7 +243,7 @@ categories:
                 resp = {'name':name,'delete':0}
             conn.close()
             return HttpResponse(json.dumps(resp),content_type="application/json")
-    
+
         # 根据虚拟机名称删除虚拟机
         if request.method == 'PATCH':
             pool = conn.lookupByName(name)
@@ -254,9 +257,6 @@ categories:
         if request.method == 'GET':
             dominfo = get_info(conn,name)
             return HttpResponse(json.dumps(dominfo),content_type="application/json")
-
-​        
-
         # 根据页面传回的json数据修改虚拟机配置
         if request.method == 'PUT':
             req = json.loads(request.body.decode('utf-8'))
@@ -276,13 +276,14 @@ categories:
             dominfo = get_info(conn,name)
             conn.close()
             return HttpResponse(json.dumps(dominfo),content_type="application/json")
-    ​```
-    
-    ​
+    ```
+
+
+
 
   ## 现存的问题：
 
   - 目前还没有创建数据库，在创建虚拟机时`mac`和`port`是代码中给定的，之后会从数据库中得到。
   - 在创建虚拟机的过程中存在一个硬盘文件拷贝问题，目前的拷贝文件大小为13G，正在寻找替代方案。（cloudimages）
-  - ​未完待续
+  - 未完待续
 
