@@ -25,3 +25,30 @@ date: 2017-10-02 20:36:50
 - 检查network
 - 选择时区，得到clock
 - 选择硬盘，安装即可
+
+
+### ubuntu使用tips
+- 自定义`ubuntu ssh` 的欢迎信息
+
+  - ```bash
+    cd /etc/update-motd.d
+    00-header     51-cloudguest         91-release-upgrade  98-fsck-at-reboot
+    10-help-text  90-updates-available  97-overlayroot      98-reboot-required
+    # 这个目录下的文件会在登陆成功后按照序号的顺序自动执行
+    ```
+
+  - 如：
+
+    ```bash
+    vim 00-header
+    # 在文件的末尾添加以下字符
+    cat << "EOT"
+      /\_/\
+    =( °w° )=
+      )   (  //
+     (__ __)//
+    EOT
+    # 保存并重启服务器
+    ```
+
+  - ![](https://vgy.me/Z0t2VL.png)

@@ -10,14 +10,22 @@ abbrlink: 422f71fe
 date: 2017-10-16 23:52:06
 ---
 
-## ifconfig 只有lo
+## ifconfig 只有lo(添加网卡)
 
 * ```bash
   cd /etc/network
   sudo vim interfaces
   # 在interfaces中添加以下语句
+
+  # 添加动态网卡
   auto eno1
   iface eno1 inet dhcp # dhcp是动态获取IP信息
+
+  # 添加静态网卡
+  auto rename3
+  iface rename3 inet static
+  address 10.0.0.3
+  netmask 255.255.255.0
   # 开启eno1 
   ifconfig eno1 up 
   # 查看IP信息
