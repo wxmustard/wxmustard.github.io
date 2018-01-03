@@ -43,5 +43,8 @@
 
   实现两台宿主机上的虚拟机间的相互通信
 
-- ​
+- [ubuntu](https://github.com/wxmustard/wxmustard.github.io/blob/master/source/_posts/ubuntu%20tips.md)
+
+
+  - 自定义`ssh`登录系统后的欢迎信息
 
