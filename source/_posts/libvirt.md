@@ -180,15 +180,15 @@ sudo pip3 install libvirt-python
   exit(0)
   ```
 
-- 运行停止文件即可关闭虚拟连接远程服务器功能函数
+- 运行停止文件即可关闭虚拟机
 
-  def ssh_remote(ip,name,passwd):
+- 连接远程服务器功能函数
+
+      def ssh_remote(ip,name,passwd):
       ssh = paramiko.SSHClient()
       ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy)
       ssh.connect(ip,22,name,passwd)
       return ssh
-
-- 机
 
 - 区别
 

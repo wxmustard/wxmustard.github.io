@@ -48,7 +48,7 @@ fi
 DIR=~/virt/images
 
 # Location of cloud image
-IMAGE=$DIR/CentOS-7-x86_64-GenericCloud.qcow2
+IMAGE=$DIR/CenvnctOS-7-x86_64-GenericCloud.qcow2
 
 # Amount of RAM in MB
 MEM=768
@@ -90,10 +90,19 @@ hostname: $1
 fqdn: $1.example.local
 # Remove cloud-init when finished with it
 runcmd:
-  - [ yum, -y, remove, cloud-init ]
+runcmd:
+  - [ locale-gen, zh_CN.UTF-8 ]
+  - [ apt, remove, cloud-init ]
+timezone: Asia/Shanghai
+
 # Configure where output will go
 output: 
   all: ">> /var/log/cloud-init.log"
+# change mirrors
+apt:
+  primary:
+    - arches: [default]
+      uri: https://mirrors.shu.edu.cn/ubuntu/
 # configure interaction with ssh server
 ssh_svcname: ssh
 ssh_deletekeys: True
