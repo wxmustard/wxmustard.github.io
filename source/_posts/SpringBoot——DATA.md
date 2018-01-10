@@ -91,48 +91,52 @@ date: 2017-11-01 08:59:32
 
     ```java
     package com.wx.girl;
-    ```
-
-
     import javax.persistence.Entity;
     import javax.persistence.GeneratedValue;
     import javax.persistence.Id;
-    
+
     /**
      * Created by mustard
      * 17-11-1 上午9:43
      */
     @Entity  //与数据库对应的注解
     public class Girl {
-    
+
         @Id
         @GeneratedValue   //添加自增的Id字段
         private Integer id;
-    
+
         public Integer getId() {
             return id;
         }
-    
+
         public String getName() {
             return name;
         }
-    
+
         public Integer getAge() {
             return age;
         }
-    
+
         private String name;
-    
+
         private Integer age;
         //使用无参构造函数
         public Girl() {
         }
     }
-    ​```
-    
-    - 运行时出现错误提醒：WARN: Establishing SSL connection without server’s identity verification is not recommended. According to MySQL 5.5.45+, 5.6.26+ and 5.7.6+ requirements SSL connection must be established by default if explicit option isn’t set. For compliance with existing applications not using SSL the verifyServerCertificate property is set to ‘false’. You need either to explicitly disable SSL by setting useSSL=false, or set useSSL=true and provide truststore for server certificate verification.
-    
-      解决方法：在数据库连接的库名后添加`?useUnicode=true&characterEncoding=utf-8&useSSL=false`
+    ```
+
+
+  - 运行时出现错误提醒：
+
+    WARN: Establishing SSL connection without server’s identity verification is not recommended. According to MySQL 5.5.45+, 5.6.26+ and 5.7.6+ requirements SSL connection must be established by default if explicit option isn’t set. For compliance with existing applications not using SSL the verifyServerCertificate property is set to ‘false’. You need either to explicitly disable SSL by setting useSSL=false, or set useSSL=true and provide truststore for server certificate verification.
+
+    解决方法：在数据库连接的库名后添加`useUnicode=true&characterEncoding=utf-8&useSSL=false`
+
+    ​
 
   - ![](https://vgy.me/bbfsC0.png)
+
+  - ​
 

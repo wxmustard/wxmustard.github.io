@@ -125,7 +125,7 @@ sudo pip3 install libvirt-python
 
 
 
-###查看域的详细信息
+### 查看域的详细信息
 
 - 创建`get_source.py`
 
