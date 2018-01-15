@@ -47,4 +47,8 @@
 
 
   - 自定义`ssh`登录系统后的欢迎信息
+  - [cloudinit](https://github.com/wxmustard/wxmustard.github.io/blob/master/source/_posts/cloudinit.md)
 
+
+    - 使用`cloudinit`初始化虚拟机配置
+    - 使用脚本自动化创建、初始化虚拟机
