@@ -11,8 +11,83 @@ categories:
 ## 目标
 
 - 设置hostman、hosts
-
 - 添加ssh keys 到 .ssh/authorized_keys
+
+## 使用`cloudinit`对虚拟机实现初始化
+
+第一步：安装必要依赖
+
+```bash
+sudo apt install cloud-init cloud-utils
+```
+
+第二步：编写`meta-data`和`user-data`
+
+```
+# meta-data内容如下ssh
+instance-id: vm03; local-hostname: vm03
+```
+
+```
+# user-data内容如下
+#cloud-config
+# Hostname management
+preserve_hostname: False
+hostname: vm03
+fqdn: vm03.example.local
+# Remove cloud-init when finished with it
+runcmd:
+  - [ yum, -y, remove, cloud-init ]
+# Configure where output will go
+output: 
+  all: ">> /var/log/cloud-init.log"
+apt:
+  primary:
+    - arches: [default]
+      uri: https://mirrors.shu.edu.cn/ubuntu/
+# configure interaction with ssh server
+ssh_svcname: ssh
+ssh_deletekeys: True
+ssh_genkeytypes: ['rsa', 'ecdsa']
+# Install my public ssh key to the first user-defined user configured 
+# in cloud.cfg in the template (which is centos for CentOS cloud images)
+ssh_authorized_keys:
+ - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDIMWzWLDpQJgNdzXKcEjMHdTrZTDVQknB9C3kE55oqi82WJh1HRueaZxvlZMH9T93URe1jmt9FAX+Pcd1hvGLzv3OPd03Oq5r8hVpQ7bitXtTngrdhvJ0zBW/E6fDo1uAnAeudW9FowMu+YBv5Yjd7Y8Wrjn1qzRjHKJyhpS09ieb5Q/cBnmNDm45oyVp4IqC5wc8xjjb6B2y9pMf8bEWfzYkneSeYYCFhoRm7sAM5Lt93tVNeRoo4VqRqrogSLwLR+Ls3mVYDAq6QkEHpvibw8TkrOkLmSKYAC4PWaiW6ZL4nuJDN+bIDcEnGtb8r6vRJhj+jlZIUCv7TZ6vLQ3vJ mustard@mustard
+
+```
+
+第三步：准备虚拟机硬盘
+
+```bash
+cp ~/virt/images/xenial-server-cloudimg-amd64-disk.img vm03.qcow2
+```
+
+第四步：从`meta-data、user-data`中获得配置，生成`iso`文件,并将操作写入日志
+
+```bash
+genisoimage -output vm03-cidata.iso -volid cidata -joliet -r user-data meta-data &>> vm03.log
+```
+
+第五步：使用`virt-install`创建虚拟机
+
+```bash
+virt-install --import --name vm03 --ram 786 --vcpus 1 --disk vm03.qcow2,format=qcow2,bus=virtio --disk vm03-cidata.iso,device=cdrom --network bridge=virbr0,model=virtio --graphics vnc,listen=0.0.0.0,port=5903 --os-type=linux --os-variant=rhel7 --noautoconsole --mac=52:54:00:09:e6:03
+```
+
+第六步：Cleaning up cloud-init...
+
+```bash
+virsh change-media vm03 hda --eject --config >> vm03.log
+```
+
+第七步：虚拟机创建完成
+
+```bash
+ssh-keygen -f "/home/mustard/.ssh/known_hosts" -R vm03  
+ssh ubuntu@vm03
+```
+
+
 
 ## 一个使用cloudinit和cloudimg创建虚拟机的脚本文件
 
@@ -186,7 +261,8 @@ if [ "$?" -eq 0 ]; then
         virsh undefine $1 > /dev/null
     else
         echo -e "\nNot overwriting $1. Exiting..."
-        exit 1
+        exit 1ssh-keygen -f "/home/mustard/.ssh/known_hosts" -R vm03
+
     fi
 fi
 
@@ -273,7 +349,7 @@ _EOF_
 
     virt-install --import --name $1 --ram $MEM --vcpus $CPUS --disk \
     $DISK,format=qcow2,bus=virtio --disk $CI_ISO,device=cdrom --network \
-    bridge=virbr0,model=virtio --graphics vnc,listen=0.0.0.0,port=$3 --noautoconsole --os-type=linux --os-variant=rhel7 --noautoconsole --mac=$2 
+    bridge=virbr0,model=virtio --graphics vnc,listen=0.0.0.0,port=$3 --os-type=linux --os-variant=rhel7 --noautoconsole --mac=$2 
 	
 	MAC=$(virsh dumpxml $1 | awk -F\' '/mac address/ {print $2}')
     while true
