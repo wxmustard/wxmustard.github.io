@@ -83,6 +83,7 @@ virsh change-media vm03 hda --eject --config >> vm03.log
 第七步：虚拟机创建完成
 
 ```bash
+# 添加指纹
 ssh-keygen -f "/home/mustard/.ssh/known_hosts" -R vm03  
 ssh ubuntu@vm03
 ```

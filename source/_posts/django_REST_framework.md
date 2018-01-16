@@ -185,4 +185,23 @@ categories:
   >>> print(kvm_list)
   ```
 
-  ​
+
+
+
+## 在`python`代码中远程执行系统命令
+
+```python
+import paramiko # ssh远程连接库
+# 连接远程服务器使用command功能函数
+def ssh_remote(ip,name,passwd):
+    ssh = paramiko.SSHClient()
+    ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy)
+    ssh.connect(ip,22,name,passwd)
+    return ssh
+# 以下代码是执行命令语句
+ssh = ssh_remote("172.22.107.51","ubuntu","ubuntu")
+str = "sudo cp /home/ubuntu/kvm/ubuntu.qcow2 /home/ubuntu/kvm/wx/"+name+".qcow2"
+print(str)
+stdin, stdout, stderr = ssh.exec_command(str)
+```
+
