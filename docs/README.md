@@ -16,7 +16,8 @@
 
 - [django_REST_framework](https://github.com/wxmustard/wxmustard.github.io/blob/master/source/_posts/django_REST_framework.md)
 
-  对于`django rest framework`的简单使用
+  - 对于`django rest framework`的简单使用
+  - 在`python`代码中远程执行系统命令
 
 - [Jupyter Notebook](https://github.com/wxmustard/wxmustard.github.io/blob/master/source/_posts/Jupyter%20Notebook.md)
 
@@ -49,7 +50,7 @@
   - 自定义`ssh`登录系统后的欢迎信息
   - [cloudinit](https://github.com/wxmustard/wxmustard.github.io/blob/master/source/_posts/cloudinit.md)
 
-
     - 使用`cloudinit`初始化虚拟机配置
     - 使用脚本自动化创建、初始化虚拟机
+
 
