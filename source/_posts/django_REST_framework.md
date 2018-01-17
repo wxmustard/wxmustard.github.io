@@ -203,5 +203,14 @@ ssh = ssh_remote("172.22.107.51","ubuntu","ubuntu")
 str = "sudo cp /home/ubuntu/kvm/ubuntu.qcow2 /home/ubuntu/kvm/wx/"+name+".qcow2"
 print(str)
 stdin, stdout, stderr = ssh.exec_command(str)
+# 获得执行命令后的返回值
+# 将返回值作为一个整体打印出来
+# 1、一次性读取整个文件。
+# 2、自动将文件内容分析成一个行的列表。
+print(stdout.readlines())
+# 一行一行打印返回值
+# 1、readline()每次读取一行，比readlines()慢得多
+# 2、readline()返回的是一个字符串对象，保存当前行的内容
+print(stdout.readline())
 ```
 

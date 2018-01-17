@@ -90,7 +90,7 @@ ssh ubuntu@vm03
 
 
 
-## 一个使用cloudinit和cloudimg创建虚拟机的脚本文件
+## 一个使用`cloudinit`和`cloudimg`创建虚拟机的脚本文件
 
 ```sh
 #!/bin/bash
@@ -235,7 +235,7 @@ popd > /dev/null
 
 
 
-## 添加vnc ports listen 
+## 添加vnc ports listen和时区 
 
 ```sh
 #!/bin/bash

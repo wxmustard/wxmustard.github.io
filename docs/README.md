@@ -17,7 +17,7 @@
 - [django_REST_framework](https://github.com/wxmustard/wxmustard.github.io/blob/master/source/_posts/django_REST_framework.md)
 
   - 对于`django rest framework`的简单使用
-  - 在`python`代码中远程执行系统命令
+  - 在`python`代码中远程执行系统命令，得到脚本执行后的返回值
 
 - [Jupyter Notebook](https://github.com/wxmustard/wxmustard.github.io/blob/master/source/_posts/Jupyter%20Notebook.md)
 
