@@ -88,3 +88,17 @@ mysql>
 # 容器中的数据库同样发生了更改，ok！
 ```
 
+## 端口转发
+
+- 如果是在服务器上创建的容器的话，需要使用`rinetd`进行端口转发
+
+```bash
+sudo apt install rinetd
+sudo vim /etc/rineed.conf
+# 将以下语句写入conf文件
+0.0.0.0 3269 192.168.110.115 3269
+# 将所有的访问3269的请求都转发至192.168.110.115的3269上
+#启动转发
+rinetd -c /etc/rinetd.conf
+```
+
