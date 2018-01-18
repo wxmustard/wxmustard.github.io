@@ -50,7 +50,7 @@ docker ps -a
 docker exec -ti 容器ID /bin/bash
 ```
 
-- 在容器内将`hexo  docker`化
+- 在容器内将`hexo docker`化
 
 ```bash
 # 安装一些必备的软件
