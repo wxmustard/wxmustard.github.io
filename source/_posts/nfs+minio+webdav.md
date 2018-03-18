@@ -203,6 +203,31 @@ date: 2017-10-02 20:42:14
 
 此时，可以在`vm15`上查看到服务器端上传的文件，并对文件进行修改，如果文件是只读的，需要进行授权处理，`chmod -R 755 s3/*`，在`vm15`上上传的文件同样可以再服务器端进行操作。
 
+## minio + docker
+
+- 拉取minio镜像
+
+  ```bash
+  # 稳定版
+  docker pull minio/minio
+  # 最新版
+  docker pull minio/minio:edge
+  ```
+
+- 创建容器，启动minio
+
+  ```bash
+  # 这种启动方式会在容器退出时销毁数据
+  docker run -p 9000:9000 minio/minio server /data
+  # 永久存储Minio容器
+  docker run -p 9000:9000 --name minio1 \
+    -v /mnt/data:/data \
+    -v /mnt/config:/root/.minio \
+    minio/minio server /data
+  ```
+
+  ​
+
 
 
 ## WebDav
