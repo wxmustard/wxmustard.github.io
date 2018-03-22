@@ -45,7 +45,7 @@ date: 2017-10-02 20:44:42
   # 重启name服务
   sudo systemctl restart name-service
   # 停止name服务
-  sudo systemctl stop name-service
+  sudo systemctl stop name-sewget https://dl.minio.io/client/mc/release/linux-amd64/mcrvice
   # 重载name服务
   sudo systemctl reload name-service
   # 检查服务状态
