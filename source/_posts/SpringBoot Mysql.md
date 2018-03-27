@@ -53,5 +53,28 @@ date: 2017-11-02 13:31:06
     service mysql restart;
     ```
 
-    ​
+- `application.yml`
+
+  ```yml
+  spring:
+    thymeleaf:
+      prefix: classpath:/templates/
+      suffix: .html
+      check-template-location: true
+      mode: HTML5
+    datasource:
+      url: jdbc:mysql://localhost:3306/test?useUnicode=true&amp;characterEncoding=UTF-8&useSSL=false
+      username: root
+      password: root
+      sql-script-encoding: utf-8
+    jpa:
+      database: mysql
+      show-sql: true
+      hibernate:
+        ddl-auto: update
+
+  ```
+
+  ​
+
 

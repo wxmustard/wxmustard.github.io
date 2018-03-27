@@ -118,17 +118,13 @@ date: 2017-10-29 20:01:28
 - 如果出现Spring Boot Configuration Annotation Processor not found in classpath错误，在`pom.xml`中添加依赖
 
   ```xml
-  <dependency>
-  			<groupId>org.springframework.boot</groupId>
-  			<artifactId>spring-boot-configuration-processor</artifactId>
-  			<optional>true</optional>
-  </dependency>
+  prefer xxxxxxxxxx <dependency>            <groupId>org.springframework.boot</groupId>            <artifactId>spring-boot-configuration-processor</artifactId>            <optional>true</optional></dependency>
+
   ```
 
 - 如果在运行时出现Field girlProperties in com.wx.girl.HelloController required a bean of type 'com.wx.girl.GirlProperties' that could not be found.错误
 
   在`GirlProperties.java`文件中添加`@Component`注解
-
 
 
 ***
