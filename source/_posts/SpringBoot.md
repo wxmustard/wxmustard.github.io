@@ -74,37 +74,38 @@ categories:
       hibernate:
         ddl-auto: update
         #数据库自动更新
-
-
   ```
+
 
 - 在DAO层实现自定义的`sql`语句
 
   ```java
-  @Repository
-  @Table(name="StuMess")
-  //@Qualifier("StuMessRep")
-  public interface StuMessDAO extends CrudRepository<StuMess, Long >{
+    @Repository
+    @Table(name="StuMess")
+    //@Qualifier("StuMessRep")
+    public interface StuMessDAO extends CrudRepository<StuMess, Long >{
 
-      @Query("select stu from StuMess stu where stu.name =:name")
-      public StuMess findStuName(@Param("name") String name);
+        @Query("select stu from StuMess stu where stu.name =:name")
+        public StuMess findStuName(@Param("name") String name);
 
-      @Query("select stu from StuMess stu where stu.num =:num")
-      public StuMess findStuNum(@Param("num") String num);
+        @Query("select stu from StuMess stu where stu.num =:num")
+        public StuMess findStuNum(@Param("num") String num);
 
 
-      @Query(value="select class_name,AVG(chinese),AVG(english),AVG(math),AVG(science),AVG(society) from stu_mess where class_name like :class_name group by class_name",nativeQuery=true)
-      public List<Object> getAverage(@Param("class_name") String className);
+        @Query(value="select class_name,AVG(chinese),AVG(english),AVG(math),AVG(science),AVG(society) from stu_mess where class_name like :class_name group by class_name",nativeQuery=true)
+        public List<Object> getAverage(@Param("class_name") String className);
 
-      @Query(value="select class_name,MAX(chinese),MAX(english),MAX(math),MAX(science),MAX(society) from stu_mess where class_name like :class_name group by class_name",nativeQuery=true)
-      public List<Object> getMax(@Param("class_name") String className);
+        @Query(value="select class_name,MAX(chinese),MAX(english),MAX(math),MAX(science),MAX(society) from stu_mess where class_name like :class_name group by class_name",nativeQuery=true)
+        public List<Object> getMax(@Param("class_name") String className);
 
-      @Query(value = "SELECT class_name,chinese,english,math,science,society,name,num FROM test.stu_mess where name like :name",nativeQuery = true)
-      public List<Object> getMesByname(@Param("name") String name);
-  //简单的操作语句Springboot已经实现了,自己写的语句后要添加字段nativeQuery = true
-  }
+        @Query(value = "SELECT class_name,chinese,english,math,science,society,name,num FROM test.stu_mess where name like :name",nativeQuery = true)
+        public List<Object> getMesByname(@Param("name") String name);
+    //简单的操作语句Springboot已经实现了,自己写的语句后要添加字段nativeQuery = true
+    }
 
   ```
+
+  ​
 
 ### 控制器与html
 
@@ -204,3 +205,49 @@ categories:
   ```
 
   ​
+
+## Q&A
+
+### 从控制器中传数据至页面
+
+- 在控制器中使用`model`
+
+  ```java
+  	@RequestMapping("/table")
+  	public String page4(Model model, String name) {
+  		List<StuMess> list_stu = stuDao.getStuMess();
+          // 将数据放入model中，在页面可以使用th：each进行循环输出
+         	model.addAttribute("list_stu", list_stu);
+  		return "table_advanced";
+  	}
+  ```
+
+- 前台页面
+
+  ```html
+  <!DOCTYPE html>
+  <!-- 引入th标签 -->
+  <html lang="en" xmlns:th="http://www.thymeleaf.org">
+  <head>
+      <meta charset="UTF-8">
+      <title>table</title>
+  </head>
+  <body>
+  <table>
+      <!-- 使用${}获得放入model中的值，list为临时变量，用于存储model中的数据 -->
+      	<tr th:each="list : ${list_stu}">
+              <td th:text="${list.name}"/>
+              <td th:text="${list.num}"/>
+              <td><a th:text="${list.className}" th:href="@{/chart}"></a></td>
+              <td th:text="${list.chinese}"/>
+              <td th:text="${list.math}"/>
+              <td th:text="${list.english}"/>
+              <td th:text="${list.science}"/>
+              <td th:text="${list.society}"/>
+              <!-- 执行超链接，进行新的请求并携带参数 -->
+              <td><a th:href="@{/chartbyid?(key=${list.num})}">查看个人详细评价</a>			    </tr>
+  </table>
+  </body>
+  </html>
+  ```
+
