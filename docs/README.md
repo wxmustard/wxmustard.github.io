@@ -52,5 +52,9 @@
 
     - 使用`cloudinit`初始化虚拟机配置
     - 使用脚本自动化创建、初始化虚拟机
+- [Springboot](https://github.com/wxmustard/wxmustard.github.io/blob/master/source/_posts/SpringBoot.md)
 
+
+  - Springboot框架中控制器与页面的交互问题
+  - 在页面使用`th:each`循环输出`model`中的数据
 
