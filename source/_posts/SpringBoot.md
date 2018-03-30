@@ -90,14 +90,15 @@ categories:
 
         @Query("select stu from StuMess stu where stu.num =:num")
         public StuMess findStuNum(@Param("num") String num);
+  ```
 
 
         @Query(value="select class_name,AVG(chinese),AVG(english),AVG(math),AVG(science),AVG(society) from stu_mess where class_name like :class_name group by class_name",nativeQuery=true)
         public List<Object> getAverage(@Param("class_name") String className);
-
+    
         @Query(value="select class_name,MAX(chinese),MAX(english),MAX(math),MAX(science),MAX(society) from stu_mess where class_name like :class_name group by class_name",nativeQuery=true)
         public List<Object> getMax(@Param("class_name") String className);
-
+    
         @Query(value = "SELECT class_name,chinese,english,math,science,society,name,num FROM test.stu_mess where name like :name",nativeQuery = true)
         public List<Object> getMesByname(@Param("name") String name);
     //简单的操作语句Springboot已经实现了,自己写的语句后要添加字段nativeQuery = true
@@ -251,3 +252,19 @@ categories:
   </html>
   ```
 
+
+### 打包
+
+- 在`pom.xml`同级文件目录中使用以下命令
+
+  ```bash
+  mvn package -DskipTests
+  ```
+
+- 在`target`文件目录下使用命令，自动运行项目
+
+  ```bash
+  java -jar demo.jar
+  ```
+
+  ​
