@@ -224,11 +224,30 @@ date: 2017-10-02 20:42:14
     -v /mnt/data:/data \
     -v /mnt/config:/root/.minio \
     minio/minio server /data
+  # 设置ACCESS & SECRET
+  docker run -p 9000:9000 --name minio1 \
+    -e "MINIO_ACCESS_KEY=AKIAIOSFODNN7EXAMPLE" \
+    -e "MINIO_SECRET_KEY=wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY" \
+    -v /mnt/data:/data \
+    -v /mnt/config:/root/.minio \
+    minio/minio server /data
+  ```
+
+
+
+## MC
+
+- [mc官方教程](https://docs.minio.io/docs/minio-client-quickstart-guide)
+
+  ```bash
+  # 添加Minio服务
+  mc config host add <ALIAS> <YOUR-S3-ENDPOINT> <YOUR-ACCESS-KEY> <YOUR-SECRET-KEY> --api <API-SIGNATURE> --lookup <BUCKET-LOOKUP-TYPE>
+  # example
+  mc config host add myminio http://172.17.0.2:9000 minio1 wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY
+
   ```
 
   ​
-
-
 
 ## WebDav
 
