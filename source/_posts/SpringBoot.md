@@ -238,15 +238,15 @@ categories:
       <!-- 使用${}获得放入model中的值，list为临时变量，用于存储model中的数据 -->
       	<tr th:each="list : ${list_stu}">
               <td th:text="${list.name}"/>
-              <td th:text="${list.num}"/>
+              <!-- 使用th:href传递多个参数使用逗号,分隔参数 -->
+              <td><a th:text="${list.num}" th:href="@{/chartbyid?(key=${list.num},times=${list.time})}"></a></td>
               <td><a th:text="${list.className}" th:href="@{/chart}"></a></td>
               <td th:text="${list.chinese}"/>
               <td th:text="${list.math}"/>
               <td th:text="${list.english}"/>
               <td th:text="${list.science}"/>
               <td th:text="${list.society}"/>
-              <!-- 执行超链接，进行新的请求并携带参数 -->
-              <td><a th:href="@{/chartbyid?(key=${list.num})}">查看个人详细评价</a>			    </tr>
+              
   </table>
   </body>
   </html>
