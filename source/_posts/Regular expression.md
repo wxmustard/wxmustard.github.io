@@ -35,6 +35,8 @@ categories:
   ```python
   import re
   str = r'^[a-zA-Z0-9_-]+@(staff.|i.|t.|oa.|zbb.)?shu\.edu\.cn$'
+  matchObj = re.match(str,''wang_xin@i.shu.edu.cn'')
+  print(matchObj.group())
   if re.match(str,'wang_xin@i.shu.edu.cn'):
       print('ok')
   else:
