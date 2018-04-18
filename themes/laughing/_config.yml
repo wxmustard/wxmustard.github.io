@@ -9,7 +9,7 @@ post_background: /wrapper.jpg
 post_menu_button: light
 title_plancehold: 随笔
 author:
-  head: https://git.shuosc.cn/uploads/-/system/user/avatar/21/avatar.png
+  head: /avatar.png
   signature: Only when you plant the flowers can you really smell their fragrance.
 navication:
   - name: Github
