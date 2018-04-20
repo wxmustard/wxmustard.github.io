@@ -90,29 +90,22 @@ categories:
 
         @Query("select stu from StuMess stu where stu.num =:num")
         public StuMess findStuNum(@Param("num") String num);
-  ```
-
-
-        @Query(value="select class_name,AVG(chinese),AVG(english),AVG(math),AVG(science),AVG(society) from stu_mess where class_name like :class_name group by class_name",nativeQuery=true)
+       @Query(value="select class_name,AVG(chinese),AVG(english),AVG(math),AVG(science),AVG(society) from stu_mess where class_name like :class_name group by class_name",nativeQuery=true)
         public List<Object> getAverage(@Param("class_name") String className);
-    
+
         @Query(value="select class_name,MAX(chinese),MAX(english),MAX(math),MAX(science),MAX(society) from stu_mess where class_name like :class_name group by class_name",nativeQuery=true)
         public List<Object> getMax(@Param("class_name") String className);
-    
+
         @Query(value = "SELECT class_name,chinese,english,math,science,society,name,num FROM test.stu_mess where name like :name",nativeQuery = true)
         public List<Object> getMesByname(@Param("name") String name);
-    //简单的操作语句Springboot已经实现了,自己写的语句后要添加字段nativeQuery = true
-    }
-
+      //简单的操作语句Springboot已经实现了,自己写的语句后要添加字段nativeQuery = true
+      }
   ```
 
-  ​
-
 ### 控制器与html
-
 - 创建一个`package`为`controller`
+```java
 
-  ```java
   @Controller
   public class IndexController {
   	String name = "";
@@ -144,7 +137,7 @@ categories:
   		return r;
   	}
   }
-  ```
+```
 
 - 异步操作的html,页面是放在`resources/templates`中的,`Springboot`会去自动找页面的
 

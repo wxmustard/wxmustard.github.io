@@ -194,10 +194,7 @@ categories:
             domains = conn.listAllDomains(0)
             if len(domains) != 0:
                 for domain in domains:
-                    print(' '+domai    
-    ​```
-
-    ​n.name())
+                    print(' '+domain.name())
             conn.close()
             return render(request,'vps.html',{'data':domains})
     # 根据页面传回的json数据创建虚拟机
@@ -205,7 +202,7 @@ categories:
             req = json.loads(request.body.decode('utf-8'))
             # 随机生成8位字符串作为虚拟机名称
             #kvmname = ''.join(random.sample(string.ascii_letters + string.digits, 8))
-            kvmname = "kmdhEbu9"python
+            kvmname = "kmdhEbu9"
             print(kvmname)
             memory = str(req['memory'])
             currentmemory = str(req['currentmemory'])
@@ -277,6 +274,8 @@ categories:
             conn.close()
             return HttpResponse(json.dumps(dominfo),content_type="application/json")
     ```
+
+
 
 
 
