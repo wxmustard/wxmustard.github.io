@@ -219,3 +219,11 @@ print(stdout.readline())
 - `ImportError: No module named 'mustard111'`
 
 原因：找不到正确路径，可以使用上级目录导入的方法
+
+- `response`返回`xml`格式数据
+
+```python
+# 从文件中读取
+return HttpResponse(open('//home//mustard//workspace//Manager.xml').read())
+```
+
