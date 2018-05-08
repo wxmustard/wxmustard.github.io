@@ -187,10 +187,10 @@ date: 2017-10-02 20:42:14
   mkdir s3
   ```
 
-* 创建挂载目录
+* 创建挂载目录(不能加sudo)
 
   ```bash
-  sudo s3fs wangxin s3 -o passwd_file=passwd,use_path_request_style,url=http://vm14:9000,rw,uid=1000,gid=1000
+  s3fs wangxin s3 -o passwd_file=passwd,use_path_request_style,url=http://vm14:9000,rw,uid=1000,gid=1000
   ```
 
 * 查看挂载目录

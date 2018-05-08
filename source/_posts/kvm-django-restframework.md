@@ -132,9 +132,6 @@ categories:
     from rest_framework.response import Response
     from django.http import HttpResponse
     import sys    
-    ​```
-
-    ​
     import json  # 返回json格式数据
     import libvirt
     import subprocess 
@@ -142,7 +139,7 @@ categories:
     import string
     import paramiko # ssh远程连接库
     # Create your views here.
-
+    
     # 连接远程服务器使用libvirtapi功能函数
     def conn_remote(username,hostname):
         str_conn = 'qemu+ssh://'+username+'@'+hostname+'/system'
@@ -178,7 +175,7 @@ categories:
                     'Is active':str(pool.isActive()),'Is persistent':str(pool.isPersistent()),'Pool state':str(info[0]),
                     'Capacity':str(info[1]),'Allocation':str(info[2]),'Available':str(info[3])}
         return dominfo
-
+    
     # 获得远程主机上已创建的虚拟机列表
     @api_view(['GET','POST'])
     def kvm_list(request,format=None):
@@ -240,7 +237,7 @@ categories:
                 resp = {'name':name,'delete':0}
             conn.close()
             return HttpResponse(json.dumps(resp),content_type="application/json")
-
+    
         # 根据虚拟机名称删除虚拟机
         if request.method == 'PATCH':
             pool = conn.lookupByName(name)
