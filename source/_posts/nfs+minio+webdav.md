@@ -221,14 +221,14 @@ date: 2017-10-02 20:42:14
 
   ```bash
   # 这种启动方式会在容器退出时销毁数据
-  docker run -p 9000:9000 minio/minio server /data
+  docker run -p 9000:9001 minio/minio server /data
   # 永久存储Minio容器
-  docker run -p 9000:9000 --name minio1 \
+  docker run -p 9000:9001 --name minio1 \
     -v /mnt/data:/data \
     -v /mnt/config:/root/.minio \
     minio/minio server /data
   # 设置ACCESS & SECRET
-  docker run -p 9000:9000 --name minio1 \
+  docker run -p 9000:9001 --name minio1 \
     -e "MINIO_ACCESS_KEY=AKIAIOSFODNN7EXAMPLE" \
     -e "MINIO_SECRET_KEY=wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY" \
     -v /mnt/data:/data \
