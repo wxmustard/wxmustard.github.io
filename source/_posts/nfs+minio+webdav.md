@@ -191,6 +191,9 @@ date: 2017-10-02 20:42:14
 
   ```bash
   s3fs wangxin s3 -o passwd_file=passwd,use_path_request_style,url=http://vm14:9000,rw,uid=1000,gid=1000
+  
+  # 调试参数
+  -d -f -o f2 -o curldbg
   ```
 
 * 查看挂载目录
